@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>B3 Floral TikTok Poster</title>
+  <style>
+    @font-face {
+      font-family: "Myanmar Text Local";
+      src: url("file:///C:/Windows/Fonts/mmrtext.ttf") format("truetype");
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Myanmar Text Local";
+      src: url("file:///C:/Windows/Fonts/mmrtextb.ttf") format("truetype");
+      font-weight: 700;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f7d7e5;
+      font-family: "Myanmar Text Local", "Myanmar Text", sans-serif;
+    }
+
+    .poster {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      color: #581535;
+      background:
+        radial-gradient(circle at 20% 5%, rgba(255, 255, 255, 0.95), transparent 28%),
+        radial-gradient(circle at 86% 12%, rgba(255, 182, 211, 0.62), transparent 20%),
+        linear-gradient(180deg, #fff8fb 0%, #ffe5f0 48%, #ffd5e7 100%);
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 30px;
+      border: 3px solid rgba(220, 32, 125, 0.32);
+      border-radius: 42px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .petal {
+      position: absolute;
+      width: 38px;
+      height: 20px;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(135deg, #ff8ab9, #dc1c77);
+      opacity: 0.64;
+      filter: drop-shadow(0 8px 8px rgba(157, 23, 81, 0.18));
+      z-index: 3;
+    }
+
+    .p1 { right: 92px; top: 130px; transform: rotate(-18deg); }
+    .p2 { left: 74px; top: 486px; transform: rotate(38deg); width: 28px; height: 15px; }
+    .p3 { right: 74px; top: 1060px; transform: rotate(22deg); }
+    .p4 { left: 132px; bottom: 270px; transform: rotate(-34deg); width: 30px; height: 16px; }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 58px 58px 54px;
+      display: grid;
+      grid-template-rows: auto auto auto auto auto auto;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-height: 106px;
+    }
+
+    .logo-wrap {
+      width: 104px;
+      height: 104px;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.82);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 34px rgba(185, 30, 103, 0.16);
+      border: 2px solid rgba(225, 43, 130, 0.18);
+    }
+
+    .logo {
+      width: 82px;
+      height: 82px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-text {
+      display: grid;
+      gap: 5px;
+    }
+
+    .b3 {
+      color: #c01769;
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .service {
+      display: inline-block;
+      width: fit-content;
+      padding: 8px 22px 7px;
+      border-radius: 999px;
+      background: #c01769;
+      color: white;
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .headline {
+      text-align: center;
+      padding-top: 4px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #961652;
+      font-size: 86px;
+      line-height: 1.15;
+      letter-spacing: 0;
+      text-shadow: 4px 5px 0 white, 0 16px 28px rgba(143, 28, 85, 0.14);
+    }
+
+    .subtitle {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 38px 9px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #cb176e, #f1398f);
+      color: white;
+      font-size: 34px;
+      line-height: 1.25;
+      font-weight: 700;
+      box-shadow: 0 14px 28px rgba(195, 25, 106, 0.18);
+    }
+
+    .hero-card {
+      position: relative;
+      height: 550px;
+      overflow: hidden;
+      border-radius: 42px;
+      border: 10px solid white;
+      box-shadow: 0 24px 48px rgba(99, 24, 60, 0.24);
+      background: white;
+    }
+
+    .hero-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 62%;
+      display: block;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 46%, rgba(73, 11, 43, 0.15));
+      pointer-events: none;
+    }
+
+    .price-card {
+      position: relative;
+      margin-top: -34px;
+      z-index: 4;
+      border-radius: 36px;
+      background: linear-gradient(145deg, #ffffff, #fff3f8);
+      border: 4px solid rgba(213, 154, 37, 0.68);
+      box-shadow: 0 22px 44px rgba(132, 24, 76, 0.18);
+      padding: 20px 30px 22px;
+      text-align: center;
+    }
+
+    .price-label {
+      display: inline-block;
+      padding: 10px 30px 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #bf1768, #f13b8f);
+      color: white;
+      font-size: 31px;
+      line-height: 1.2;
+      font-weight: 700;
+      box-shadow: inset 0 -4px 0 rgba(255, 211, 77, 0.9);
+    }
+
+    .old-price {
+      position: relative;
+      display: block;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 16px;
+      color: #8b4965;
+      font-size: 32px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .old-price::after {
+      content: "";
+      position: absolute;
+      left: -14px;
+      right: -14px;
+      top: 50%;
+      height: 6px;
+      border-radius: 999px;
+      background: #d71973;
+      transform: rotate(-6deg);
+      box-shadow: 0 2px 0 white;
+    }
+
+    .new-price {
+      display: block;
+      margin-top: 8px;
+      color: #d71973;
+      font-size: 72px;
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .new-price small {
+      color: #6e163e;
+      font-size: 34px;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .info-card {
+      min-height: 130px;
+      padding: 18px 20px 15px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 3px solid rgba(230, 78, 148, 0.28);
+      box-shadow: 0 14px 30px rgba(133, 24, 76, 0.08);
+      display: grid;
+      align-content: center;
+      text-align: center;
+    }
+
+    .info-title {
+      color: #c01769;
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .info-main {
+      color: #4c1430;
+      font-size: 29px;
+      line-height: 1.34;
+      font-weight: 700;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px;
+      height: 340px;
+    }
+
+    .photo {
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+      border-radius: 28px;
+      border: 7px solid white;
+      background: white;
+      box-shadow: 0 16px 30px rgba(89, 20, 55, 0.18);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .yellow img { object-position: 50% 44%; }
+    .blue img { object-position: 50% 42%; }
+    .red img { object-position: 50% 50%; }
+    .box img { object-position: 50% 56%; }
+
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .contact {
+      border-radius: 34px;
+      background: linear-gradient(135deg, #c01769, #ec2f89);
+      color: white;
+      padding: 22px 32px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+      box-shadow: 0 16px 34px rgba(185, 30, 103, 0.22);
+    }
+
+    .phone-icon {
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.22);
+      display: grid;
+      place-items: center;
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .contact-title {
+      display: block;
+      color: #ffe3ef;
+      font-size: 25px;
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .contact-main {
+      display: block;
+      color: white;
+      font-size: 38px;
+      line-height: 1.28;
+      font-weight: 700;
+    }
+
+  </style>
+</head>
+<body>
+  <main class="poster" aria-label="B3 Floral TikTok ပန်းစည်းသင်တန်း ကြော်ငြာ">
+    <span class="petal p1"></span>
+    <span class="petal p2"></span>
+    <span class="petal p3"></span>
+    <span class="petal p4"></span>
+
+    <section class="content">
+      <header class="brand">
+        <div class="logo-wrap">
+          <img class="logo" src="../b3-logo.png" alt="B3 Logo">
+        </div>
+        <div class="brand-text">
+          <div class="b3">B3 Floral Shop</div>
+          <div class="service">Service &amp; Supplies</div>
+        </div>
+      </header>
+
+      <section class="headline">
+        <h1>ပန်းစည်းသင်တန်း</h1>
+        <div class="subtitle">၃ ရက်တာ လက်တွေ့သင်တန်း</div>
+      </section>
+
+      <figure class="hero-card">
+        <img src="./tiktok-assets/money-main.jpg" alt="">
+      </figure>
+
+      <section class="price-card">
+        <div class="price-label">အထူးအခွင့်အရေး</div>
+        <div class="old-price">ပုံမှန်စျေး ၁၂ သိန်းကျပ်</div>
+        <div class="new-price">၈၅၀၀၀ <small>ကျပ်</small></div>
+      </section>
+
+      <section class="info-row">
+        <div class="info-card">
+          <div class="info-title">သင်တန်းရက်</div>
+          <div class="info-main">ဇူလိုင် ၁၀၊ ၁၁၊ ၁၂<br>စုစုပေါင်း ၃ ရက်</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">သင်တန်းချိန်</div>
+          <div class="info-main">9:30 AM - 12:30 PM<br>1:30 PM - 4:30 PM</div>
+        </div>
+      </section>
+
+      <section class="gallery" aria-label="B3 Floral သင်တန်းပုံနမူနာများ">
+        <figure class="photo yellow"><img src="./tiktok-assets/yellow-roses.jpg" alt=""></figure>
+        <figure class="photo blue"><img src="./tiktok-assets/blue-bears.jpg" alt=""></figure>
+        <figure class="photo red"><img src="./tiktok-assets/red-bouquet.jpg" alt=""></figure>
+        <figure class="photo box"><img src="./tiktok-assets/black-box-roses.jpg" alt=""></figure>
+      </section>
+
+      <footer class="footer">
+        <div class="contact">
+          <div class="phone-icon">☎</div>
+          <div>
+            <span class="contact-title">စာရင်းပေးရန်နှင့် အသေးစိတ်မေးမြန်းရန်</span>
+            <span class="contact-main">09 523 2985 &nbsp; | &nbsp; 09 697 319 846</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

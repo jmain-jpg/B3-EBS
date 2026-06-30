@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>B3 Floral ပန်းစည်းသင်တန်း Poster</title>
+  <style>
+    @font-face {
+      font-family: "Myanmar Text Local";
+      src: url("file:///C:/Windows/Fonts/mmrtext.ttf") format("truetype");
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Myanmar Text Local";
+      src: url("file:///C:/Windows/Fonts/mmrtextb.ttf") format("truetype");
+      font-weight: 700;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f5dce6;
+      font-family: "Myanmar Text Local", "Myanmar Text", "Padauk", sans-serif;
+    }
+
+    .poster {
+      position: relative;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 242, 247, 0.48), rgba(255, 229, 239, 0.92)),
+        url("./b3-floral-class-bg.png") center / cover no-repeat;
+      color: #4a1830;
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 34px;
+      border: 3px solid rgba(194, 45, 109, 0.34);
+      border-radius: 34px;
+      pointer-events: none;
+    }
+
+    .veil {
+      position: absolute;
+      inset: 76px 70px 70px;
+      border-radius: 28px;
+      background: rgba(255, 248, 251, 0.82);
+      box-shadow: 0 30px 80px rgba(138, 28, 70, 0.18);
+      backdrop-filter: blur(1px);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 78px 86px 68px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: #ba1f67;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .brand-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 58px;
+      line-height: 1;
+      color: #b71e63;
+    }
+
+    .brand-sub {
+      min-width: 256px;
+      padding: 13px 26px 11px;
+      border-radius: 999px;
+      background: #b71e63;
+      color: white;
+      text-align: center;
+      font-size: 25px;
+      line-height: 1.35;
+      box-shadow: 0 12px 28px rgba(183, 30, 99, 0.25);
+    }
+
+    h1 {
+      margin: 10px 0 0;
+      color: #811448;
+      font-size: 67px;
+      line-height: 1.28;
+      text-align: center;
+      letter-spacing: 0;
+      text-shadow: 0 3px 0 rgba(255, 255, 255, 0.62);
+    }
+
+    .lead {
+      margin: -2px auto 4px;
+      width: fit-content;
+      padding: 11px 28px 9px;
+      border-radius: 999px;
+      background: #fff0f6;
+      border: 2px solid rgba(183, 30, 99, 0.2);
+      color: #8d1a50;
+      font-size: 31px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .hero-row {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .price-box,
+    .date-box {
+      border-radius: 22px;
+      padding: 24px 24px 20px;
+      background: linear-gradient(135deg, #b71e63, #e0478a);
+      color: white;
+      box-shadow: 0 18px 35px rgba(150, 22, 80, 0.22);
+    }
+
+    .date-box {
+      background: linear-gradient(135deg, #fff7fa, #ffe0ec);
+      color: #65113b;
+      border: 2px solid rgba(183, 30, 99, 0.24);
+    }
+
+    .eyebrow {
+      display: block;
+      font-size: 25px;
+      line-height: 1.25;
+      opacity: 0.92;
+    }
+
+    .price {
+      display: block;
+      margin-top: 10px;
+      font-size: 54px;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .old-price {
+      display: block;
+      margin-top: 10px;
+      font-size: 23px;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .date {
+      display: block;
+      margin-top: 8px;
+      font-size: 49px;
+      line-height: 1.15;
+      font-weight: 700;
+      color: #b71e63;
+    }
+
+    .time {
+      margin-top: 9px;
+      font-size: 23px;
+      line-height: 1.55;
+      color: #5b1839;
+    }
+
+    .section {
+      border-radius: 22px;
+      padding: 21px 26px 18px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid rgba(183, 30, 99, 0.18);
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      color: #b71e63;
+      font-size: 31px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 22px;
+      row-gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: #4c1933;
+      font-size: 22px;
+      line-height: 1.34;
+      font-weight: 700;
+    }
+
+    .lesson-grid li {
+      position: relative;
+      padding-left: 25px;
+    }
+
+    .lesson-grid li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.74em;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d92f80;
+      box-shadow: 0 0 0 5px rgba(217, 47, 128, 0.12);
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .benefit {
+      min-height: 112px;
+      padding: 14px 14px 12px;
+      border-radius: 18px;
+      background: #fff3f8;
+      color: #5d173a;
+      font-size: 21px;
+      line-height: 1.35;
+      font-weight: 700;
+      text-align: center;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(183, 30, 99, 0.15);
+    }
+
+    .footer {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .place,
+    .contact {
+      border-radius: 22px;
+      padding: 18px 22px 16px;
+      background: rgba(88, 15, 51, 0.92);
+      color: white;
+    }
+
+    .contact {
+      background: #b71e63;
+    }
+
+    .footer-title {
+      display: block;
+      margin-bottom: 7px;
+      color: #ffe0ee;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .footer-text {
+      display: block;
+      color: white;
+      font-size: 24px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .note {
+      margin: 0;
+      color: #811448;
+      text-align: center;
+      font-size: 24px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="poster" aria-label="B3 Floral ပန်းစည်းအလှဆင် သင်တန်း ကြော်ငြာပိုစတာ">
+    <div class="veil"></div>
+    <section class="content">
+      <div class="brand">
+        <div>
+          <div class="brand-name">B3 Floral</div>
+        </div>
+        <div class="brand-sub">Service &amp; Supplies</div>
+      </div>
+
+      <h1>ပန်းစည်းအလှဆင်<br>သင်တန်း</h1>
+      <div class="lead">၃ ရက်တာ လက်တွေ့သင်ကြားပေးမည့် အထူးသင်တန်း</div>
+
+      <div class="hero-row">
+        <div class="price-box">
+          <span class="eyebrow">အရင်ဆုံးအပ်နှံသူ ၁၀ဦးအတွက်သာ</span>
+          <span class="price">၈၅၀,၀၀၀ ကျပ်</span>
+          <span class="old-price">ပုံမှန်သင်တန်းကြေး ၁၂ သိန်းခွဲကျပ်</span>
+        </div>
+        <div class="date-box">
+          <span class="eyebrow">သင်တန်းရက်</span>
+          <span class="date">ဇူလိုင် ၁၀၊ ၁၁၊ ၁၂</span>
+          <div class="time">9:30 AM - 12:30 PM<br>1:30 PM - 4:30 PM</div>
+        </div>
+      </div>
+
+      <section class="section">
+        <h2 class="section-title">သင်ကြားပေးမည့် အကြောင်းအရာများ</h2>
+        <ul class="lesson-grid">
+          <li>ပန်းပစ္စည်းအခေါ်အဝေါ်များ</li>
+          <li>Paper ခေါက်နည်းအမျိုးမျိုး</li>
+          <li>ဖဲကြိုးစည်းနည်းအမျိုးမျိုး</li>
+          <li>ဖော့အသုံးပြုပုံအမျိုးမျိုး</li>
+          <li>ပိုက်ဆံခေါက်နည်းများ</li>
+          <li>Mini ပန်းတစ်ပွင့်စည်းနည်း</li>
+          <li>ကိုရီးယားစတိုင် ပန်းစည်းနည်း</li>
+          <li>အရုပ် ၁၀ကောင် ဖော့ရုပ်စည်းနည်း</li>
+          <li>ပန်းအစစ် ၃၀ပွင့် ခွက်အသေးစည်းနည်း</li>
+          <li>ငွေသားအရွက် ၁၀၀ ခွက်အကြီးစည်းနည်း</li>
+        </ul>
+      </section>
+
+      <section class="benefits" aria-label="သင်တန်းအထူးစီစဉ်ပေးမှုများ">
+        <div class="benefit">မည်သည့်ပစ္စည်းမှ<br>ယူဆောင်လာရန် မလိုပါ</div>
+        <div class="benefit">ပန်းနှင့် ပစ္စည်းအားလုံး<br>သင်တန်းဘက်မှ စီစဉ်ပေးမည်</div>
+        <div class="benefit">လက်တွေ့ပြုလုပ်ထားသော<br>ပန်းစည်းတိုင်း ပြန်လည်ပေးအပ်မည်</div>
+      </section>
+
+      <p class="note">သင်တန်းသားအရေအတွက် အကန့်အသတ်ရှိပါသဖြင့် ကြိုတင်စာရင်းပေးသွင်းပါရှင့်</p>
+
+      <footer class="footer">
+        <div class="place">
+          <span class="footer-title">သင်တန်းနေရာ</span>
+          <span class="footer-text">အမှတ် (၁၃၃)လမ်း၊ 60A လမ်းထောင့်<br>ပြည်ကြီးတံခွန်မြို့နယ်၊ မန္တလေးမြို့</span>
+        </div>
+        <div class="contact">
+          <span class="footer-title">စာရင်းပေးရန်</span>
+          <span class="footer-text">09 523 2985<br>09 697 319 846</span>
+        </div>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

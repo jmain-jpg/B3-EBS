@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>B3 Floral 16:9 Class Poster</title>
+  <style>
+    @font-face {
+      font-family: "Myanmar Text Local";
+      src: url("file:///C:/Windows/Fonts/mmrtext.ttf") format("truetype");
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Myanmar Text Local";
+      src: url("file:///C:/Windows/Fonts/mmrtextb.ttf") format("truetype");
+      font-weight: 700;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f6dce8;
+      font-family: "Myanmar Text Local", "Myanmar Text", sans-serif;
+    }
+
+    .poster {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,0.92), rgba(255,255,255,0.28) 34%, transparent 58%),
+        linear-gradient(112deg, rgba(255,245,249,0.94) 0%, rgba(255,232,242,0.94) 48%, rgba(255,245,249,0.96) 100%),
+        url("./b3-floral-class-bg.png") center / cover no-repeat;
+      color: #4d1632;
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 3px solid rgba(217, 40, 121, 0.32);
+      border-radius: 34px;
+      pointer-events: none;
+    }
+
+    .poster::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 92% 6%, rgba(255, 48, 125, 0.2), transparent 10%),
+        radial-gradient(circle at 77% 90%, rgba(252, 187, 211, 0.45), transparent 17%);
+      pointer-events: none;
+    }
+
+    .petal {
+      position: absolute;
+      width: 34px;
+      height: 18px;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(135deg, #ff77a8, #da1a72);
+      opacity: 0.72;
+      filter: drop-shadow(0 8px 8px rgba(171, 23, 85, 0.18));
+      z-index: 3;
+    }
+
+    .p1 { right: 455px; top: 58px; transform: rotate(24deg); }
+    .p2 { right: 274px; top: 192px; transform: rotate(-27deg); width: 25px; height: 14px; }
+    .p3 { left: 694px; top: 126px; transform: rotate(58deg); width: 22px; height: 12px; }
+    .p4 { right: 100px; top: 530px; transform: rotate(18deg); width: 28px; height: 16px; }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 36px 62px 34px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .logo {
+      width: 92px;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid white;
+      box-shadow: 0 10px 28px rgba(133, 24, 73, 0.2);
+      background: white;
+    }
+
+    .brand-main {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .b3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 82px;
+      line-height: 0.9;
+      font-weight: 700;
+      color: #c01769;
+      text-shadow: 4px 5px 0 white, 0 12px 22px rgba(167, 25, 86, 0.18);
+      letter-spacing: 0;
+    }
+
+    .shop {
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 700;
+      color: #c01769;
+      text-shadow: 3px 4px 0 white;
+    }
+
+    .tag {
+      padding: 13px 28px 11px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #c8176c, #ef3c8c);
+      color: white;
+      font-size: 26px;
+      line-height: 1.25;
+      font-weight: 700;
+      box-shadow: 0 16px 28px rgba(190, 28, 104, 0.22);
+      white-space: nowrap;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      min-height: 0;
+    }
+
+    .left,
+    .right {
+      min-height: 0;
+    }
+
+    .left {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 12px;
+    }
+
+    .headline {
+      position: relative;
+      padding: 4px 6px 0;
+    }
+
+    h1 {
+      margin: 0;
+      color: #9d1658;
+      font-size: 74px;
+      line-height: 1.08;
+      letter-spacing: 0;
+      text-shadow:
+        4px 5px 0 white,
+        0 16px 28px rgba(132, 25, 76, 0.15);
+    }
+
+    .subline {
+      margin-top: 8px;
+      display: inline-block;
+      padding: 14px 40px 11px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d41b77, #f23c91);
+      color: white;
+      font-size: 30px;
+      line-height: 1.25;
+      font-weight: 700;
+      box-shadow: 0 12px 24px rgba(207, 26, 115, 0.18);
+    }
+
+    .intro {
+      margin: 0;
+      max-width: 990px;
+      padding-left: 8px;
+      color: #5c203d;
+      font-size: 23px;
+      line-height: 1.32;
+      font-weight: 700;
+    }
+
+    .lesson-card {
+      padding: 16px 24px 15px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.83);
+      border: 3px solid rgba(238, 91, 153, 0.36);
+      box-shadow: 0 18px 44px rgba(143, 24, 78, 0.12);
+      min-height: 0;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0 0 12px;
+      padding: 10px 24px 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #cf176e, #f2348c);
+      color: white;
+      font-size: 27px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .flower-dot {
+      color: #ffe9f3;
+      font-size: 29px;
+      line-height: 1;
+      text-shadow: 0 2px 0 rgba(120, 12, 58, 0.12);
+    }
+
+    .lessons {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 26px;
+      row-gap: 2px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 19px;
+      line-height: 1.34;
+      font-weight: 700;
+      color: #4d1632;
+    }
+
+    .lessons li {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .lessons li::before {
+      content: "✿";
+      position: absolute;
+      left: 0;
+      top: -2px;
+      color: #e01d7b;
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 0.98fr 1.1fr 1fr;
+      gap: 14px;
+    }
+
+    .info-card {
+      min-height: 124px;
+      padding: 16px 18px 14px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 3px solid rgba(238, 91, 153, 0.33);
+      box-shadow: 0 14px 28px rgba(143, 24, 78, 0.08);
+    }
+
+    .info-title {
+      display: block;
+      color: #c01769;
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 700;
+      margin-bottom: 9px;
+    }
+
+    .info-big {
+      display: block;
+      color: #541737;
+      font-size: 29px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .info-small {
+      display: block;
+      color: #5c203d;
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .price-card {
+      position: relative;
+      overflow: hidden;
+      border-color: rgba(206, 151, 37, 0.58);
+      background: linear-gradient(180deg, #fffaf0, #fff7fb);
+    }
+
+    .price-card::before {
+      content: "အထူးအခွင့်အရေး";
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      top: 14px;
+      padding: 8px 14px 6px;
+      border-radius: 0 0 18px 18px;
+      background: linear-gradient(135deg, #c8176c, #ef3c8c);
+      color: white;
+      text-align: center;
+      font-size: 25px;
+      line-height: 1.1;
+      font-weight: 700;
+      box-shadow: inset 0 -3px 0 rgba(255, 207, 88, 0.86);
+    }
+
+    .price-body {
+      padding-top: 42px;
+      text-align: center;
+    }
+
+    .price-main {
+      color: #d71973;
+      display: block;
+      font-size: 43px;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .right {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 14px;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .photo {
+      position: relative;
+      overflow: hidden;
+      border-radius: 26px;
+      border: 7px solid white;
+      background: white;
+      box-shadow: 0 15px 34px rgba(90, 28, 58, 0.24);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .hero-photo {
+      grid-row: span 2;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .mini-grid .photo {
+      border-radius: 20px;
+      border-width: 6px;
+    }
+
+    .caption-ribbon {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      padding: 10px 16px 8px;
+      border-radius: 999px;
+      background: rgba(201, 23, 108, 0.92);
+      color: white;
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(94, 18, 55, 0.18);
+    }
+
+    .bonus {
+      display: grid;
+      grid-template-columns: 120px 1fr 134px;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 22px;
+      min-height: 118px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 3px solid rgba(238, 91, 153, 0.34);
+      box-shadow: 0 16px 32px rgba(143, 24, 78, 0.11);
+    }
+
+    .gift {
+      width: 98px;
+      height: 98px;
+      border-radius: 24px;
+      background:
+        linear-gradient(90deg, transparent 43%, #d11670 43% 57%, transparent 57%),
+        linear-gradient(180deg, transparent 44%, #d11670 44% 56%, transparent 56%),
+        linear-gradient(135deg, #ffb4cf, #ff73aa);
+      border: 5px solid #ffd8e8;
+      box-shadow: inset 0 0 0 7px rgba(255,255,255,0.24), 0 12px 22px rgba(160, 21, 83, 0.16);
+    }
+
+    .bonus-title {
+      display: block;
+      color: #c01769;
+      font-size: 25px;
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .bonus-text {
+      display: block;
+      color: #4d1632;
+      font-size: 20px;
+      line-height: 1.36;
+      font-weight: 700;
+    }
+
+    .rose {
+      width: 118px;
+      height: 98px;
+      object-fit: cover;
+      border-radius: 24px;
+      filter: drop-shadow(0 12px 18px rgba(158, 29, 82, 0.18));
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: 0.92fr 1fr 0.92fr;
+      gap: 18px;
+      min-height: 122px;
+      padding: 0 6px;
+    }
+
+    .foot-card {
+      padding: 14px 24px 12px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #c8176c, #e72383);
+      color: white;
+      display: grid;
+      align-content: center;
+      box-shadow: 0 16px 30px rgba(178, 23, 92, 0.22);
+    }
+
+    .foot-card.dark {
+      background: linear-gradient(135deg, #73193f, #a3195c);
+    }
+
+    .foot-label {
+      color: #ffd7e8;
+      font-size: 21px;
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .foot-text {
+      font-size: 25px;
+      line-height: 1.28;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="poster" aria-label="B3 Floral 16:9 ပန်းစည်းသင်တန်း ပိုစတာ">
+    <span class="petal p1"></span>
+    <span class="petal p2"></span>
+    <span class="petal p3"></span>
+    <span class="petal p4"></span>
+
+    <section class="content">
+      <header class="topbar">
+        <div class="brand">
+          <img class="logo" src="./landscape-assets/ref-logo.png" alt="">
+          <div class="brand-main">
+            <div class="b3">B3</div>
+            <div class="shop">Floral Shop</div>
+          </div>
+        </div>
+        <div class="tag">B3 Floral Service &amp; Supplies</div>
+      </header>
+
+      <section class="main">
+        <div class="left">
+          <div class="headline">
+            <h1>ပန်းစည်းအလှဆင် သင်တန်း</h1>
+            <div class="subline">(၃) ရက်တာ လက်တွေ့သင်တန်း</div>
+          </div>
+
+          <p class="intro">
+            ပန်းစည်းလှလှလေးတွေကို ကိုယ်တိုင်ဖန်တီးချင်သူများ၊ ပန်းလုပ်ငန်းစတင်ချင်သူများအတွက်
+            B3 Floral Shop မှ လက်တွေ့ကျကျ သင်ကြားပေးမည့် အထူးသင်တန်း။
+          </p>
+
+          <section class="lesson-card">
+            <h2 class="panel-title"><span class="flower-dot">✿</span> သင်ကြားပေးမည့် အကြောင်းအရာများ</h2>
+            <ul class="lessons">
+              <li>ပန်းပစ္စည်းအခေါ်အဝေါ်များ</li>
+              <li>Paper ခေါက်နည်းအမျိုးမျိုး</li>
+              <li>ဖဲကြိုးစည်းနည်းအမျိုးမျိုး</li>
+              <li>ဖော့အသုံးပြုပုံအမျိုးမျိုး</li>
+              <li>ခွက်အသုံးပြုပုံများ</li>
+              <li>ပိုက်ဆံခေါက်နည်းများ</li>
+              <li>Mini ပန်းတစ်ပွင့်စည်းနည်း</li>
+              <li>ကိုရီးယားစတိုင် ၇ပွင့် ပန်းစည်းနည်း</li>
+              <li>အရုပ် ၁၀ကောင် ဖော့ရုပ်စည်းနည်း</li>
+              <li>ပန်းအစစ် ၃၀ပွင့် ခွက်အသေးစည်းနည်း</li>
+              <li>ကိုရီးယားစတိုင် ပန်းစည်းနည်း</li>
+              <li>ငွေသားအရွက် ၁၀၀ ခွက်အကြီးစည်းနည်း</li>
+            </ul>
+          </section>
+
+          <div class="info-row">
+            <div class="info-card">
+              <span class="info-title">သင်တန်းရက်</span>
+              <span class="info-big">ဇူလိုင် ၁၀ / ၁၁ / ၁၂</span>
+              <span class="info-small">စုစုပေါင်း (၃) ရက်</span>
+            </div>
+            <div class="info-card">
+              <span class="info-title">သင်တန်းချိန်</span>
+              <span class="info-big">9:30 AM - 12:30 PM</span>
+              <span class="info-small">1:30 PM - 4:30 PM<br>12:30 PM - 1:30 PM နားချိန်</span>
+            </div>
+            <div class="info-card price-card">
+              <div class="price-body">
+                <span class="info-small">ပထမဆုံး ၁၀ဦးအတွက်</span>
+                <span class="price-main">၈၅၀,၀၀၀</span>
+                <span class="info-small">ကျပ်သာ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="right">
+          <div class="gallery">
+            <figure class="photo hero-photo">
+              <img src="./landscape-assets/ref-money-flower.png" alt="">
+              <figcaption class="caption-ribbon">လူကြိုက်များတဲ့ ပန်းစည်းပုံစံများကို လက်တွေ့သင်ကြားမည်</figcaption>
+            </figure>
+            <div class="mini-grid">
+              <figure class="photo"><img src="./landscape-assets/ref-yellow-bouquet.png" alt=""></figure>
+              <figure class="photo"><img src="./landscape-assets/ref-blue-bouquet.png" alt=""></figure>
+              <figure class="photo"><img src="./landscape-assets/ref-money-bouquet.png" alt=""></figure>
+              <figure class="photo"><img src="./landscape-assets/ref-red-bouquet.png" alt=""></figure>
+            </div>
+          </div>
+
+          <section class="bonus">
+            <div class="gift" aria-hidden="true"></div>
+            <div>
+              <span class="bonus-title">သင်တန်းသား/သူများအတွက် အထူးစီစဉ်ပေးထားမှုများ</span>
+              <span class="bonus-text">
+                မည်သည့်ပစ္စည်းမှ ယူဆောင်လာရန်မလိုပါ။ လိုအပ်သည့် ပန်းနှင့်ပစ္စည်းအားလုံး စီစဉ်ပေးပြီး လက်တွေ့ပြုလုပ်ထားသော ပန်းစည်းတိုင်း ပြန်လည်ပေးအပ်မည်။
+              </span>
+            </div>
+            <img class="rose" src="./landscape-assets/ref-box-bouquet.png" alt="">
+          </section>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <div class="foot-card">
+          <div class="foot-label">စာရင်းပေးရန်</div>
+          <div class="foot-text">09 523 2985<br>09 697 319 846</div>
+        </div>
+        <div class="foot-card dark">
+          <div class="foot-label">သင်တန်းနေရာ</div>
+          <div class="foot-text">အမှတ် (၁၃၃)လမ်း၊ 60A လမ်းထောင့်<br>ပြည်ကြီးတံခွန်မြို့နယ်၊ မန္တလေးမြို့</div>
+        </div>
+        <div class="foot-card">
+          <div class="foot-label">ကြိုတင်စာရင်းပေးသွင်းရန်</div>
+          <div class="foot-text">Page Messenger မှလည်း<br>ဆက်သွယ်နိုင်ပါတယ်ရှင့်</div>
+        </div>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
