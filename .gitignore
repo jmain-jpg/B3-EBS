@@ -1,0 +1,20 @@
+node_modules/
+.wrangler/
+public/
+cloudflare/seed.sql
+cloudflare/seed-parts/
+cloudflare/recovery-state.json
+backups/
+.codex_tmp/performance-20260831/
+.codex_tmp/
+.codex-spreadsheet-work/
+data/
+logs/
+tmp/
+output/
+outputs/
+__pycache__/
+*.log
+B3 Phone URL.txt
+B3 Static IP Result.txt
+*.pbix

@@ -1,16 +1,19 @@
 <!doctype html>
-<html lang="my">
+<html lang="my" class="glass-ui">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>B3 Floral EBS</title>
     <meta name="description" content="Floral shop stock, sale, expense, staff, permission, and report dashboard." />
     <link rel="icon" href="assets/b3-logo.png" />
-    <link rel="stylesheet" href="styles.css?v=20260625-01" />
+    <link rel="stylesheet" href="styles.css?v=20261006-business-transfer" />
   </head>
   <body>
     <div class="login-screen" id="loginScreen">
       <form class="login-card" id="loginForm">
+        <button class="login-theme-toggle" type="button" id="loginThemeToggle" aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode" onclick="toggleThemeMode()">
+          <i data-lucide="moon" aria-hidden="true"></i>
+        </button>
         <img class="login-logo" src="assets/b3-logo.png" alt="B3 Floral Shop logo" />
         <div>
           <p class="eyebrow">Log In</p>
@@ -30,49 +33,142 @@
       </form>
     </div>
 
+    <div class="cloud-sync-guard" id="cloudSyncGuard" role="status" aria-live="assertive" hidden>
+      <div class="cloud-sync-guard-card">
+        <button class="login-theme-toggle cloud-theme-toggle" type="button" id="cloudThemeToggle" aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode" onclick="toggleThemeMode()">
+          <i data-lucide="moon" aria-hidden="true"></i>
+        </button>
+        <span class="cloud-sync-spinner" aria-hidden="true"></span>
+        <strong>Cloud data စစ်ဆေးနေသည်</strong>
+        <p id="cloudSyncGuardMessage">နောက်ဆုံး Sale/Voucher စာရင်းယူပြီးမှ ဆက်သုံးနိုင်ပါမယ်။</p>
+        <button class="button primary" id="cloudSyncRetryButton" type="button" hidden>Retry Cloud Sync</button>
+      </div>
+    </div>
+
     <div class="app-shell" id="appShell">
-      <aside class="sidebar" aria-label="Main navigation">
-        <a class="brand" href="#dashboard" aria-label="B3 Floral EBS">
+      <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <button class="app-nav-button app-back-button" type="button" id="appBackButton" aria-label="နောက်သို့ ပြန်သွားရန်">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          <small>Back</small>
+        </button>
+        <a class="brand" href="#home" aria-label="B3 Floral EBS Home">
           <img class="brand-logo" src="assets/b3-logo.png" alt="" aria-hidden="true" />
-          <span>
+          <span class="brand-copy">
             <strong>B3 Floral EBS</strong>
-            <small>Stock / Sale / Report</small>
+            <small id="currentViewTitle">Home</small>
           </span>
         </a>
-        <button class="menu-toggle" type="button" id="menuToggle" aria-expanded="false" aria-controls="sideNav">Menu</button>
+        <button class="app-nav-button app-home-button" type="button" id="appHomeButton" aria-label="Home page သို့သွားရန်">
+          <i data-lucide="house" aria-hidden="true"></i>
+          <small>Home</small>
+        </button>
+        <button class="menu-toggle" type="button" id="menuToggle" aria-expanded="true" aria-controls="sideNav" aria-label="Hide menu">
+          <i class="menu-toggle-icon" data-lucide="panel-left-close" aria-hidden="true"></i>
+          <span class="menu-toggle-label">Hide menu</span>
+        </button>
         <nav class="side-nav" id="sideNav">
-          <a href="#home" data-nav="home"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Home</span></a>
-          <a href="#dashboard" data-nav="dashboard"><span class="nav-icon" aria-hidden="true">▦</span><span class="nav-label">Dashboard</span></a>
-          <a href="#stock" data-nav="stock"><span class="nav-icon" aria-hidden="true">✿</span><span class="nav-label">Stock ထည့်ရန်</span></a>
-          <a href="#sticker" data-nav="sticker"><span class="nav-icon" aria-hidden="true">▣</span><span class="nav-label">Sticker Print</span></a>
-          <a href="#sale" data-nav="sale"><span class="nav-icon" aria-hidden="true">₭</span><span class="nav-label">Cashier Sale</span></a>
-          <a href="#production" data-nav="production"><span class="nav-icon" aria-hidden="true">⚒</span><span class="nav-label">Production Order</span><span class="nav-badge" data-nav-badge="production" hidden>0</span></a>
-          <a href="#vouchers" data-nav="vouchers"><span class="nav-icon" aria-hidden="true">☷</span><span class="nav-label">Voucher</span></a>
-          <a href="#fulfillment" data-nav="fulfillment"><span class="nav-icon" aria-hidden="true">⇄</span><span class="nav-label">Pickup / Delivery</span><span class="nav-badge" data-nav-badge="fulfillment" hidden>0</span></a>
-          <a href="#expense" data-nav="expense"><span class="nav-icon" aria-hidden="true">−</span><span class="nav-label">Daily Expense</span></a>
-          <a href="#inventory" data-nav="inventory"><span class="nav-icon" aria-hidden="true">▤</span><span class="nav-label">Inventory</span></a>
-          <a href="#reports" data-nav="reports"><span class="nav-icon" aria-hidden="true">↗</span><span class="nav-label">စာရင်းချုပ်</span></a>
-          <a href="#settings" data-nav="settings"><span class="nav-icon" aria-hidden="true">⚙</span><span class="nav-label">Setting</span></a>
+          <a href="#dashboard" data-nav="dashboard"><span class="nav-icon" aria-hidden="true"><i data-lucide="layout-dashboard"></i></span><span class="nav-label"><strong>Dashboard</strong><small>အနှစ်ချုပ်</small></span></a>
+          <a href="#stock" data-nav="stock"><span class="nav-icon" aria-hidden="true"><i data-lucide="package-plus"></i></span><span class="nav-label"><strong>Stock ထည့်ရန်</strong><small>ပစ္စည်းအသစ်</small></span></a>
+          <a href="#sale" data-nav="sale"><span class="nav-icon" aria-hidden="true"><i data-lucide="shopping-bag"></i></span><span class="nav-label"><strong>Cashier</strong><small>အရောင်းအသစ်</small></span></a>
+          <a href="#vouchers" data-nav="vouchers"><span class="nav-icon" aria-hidden="true"><i data-lucide="receipt-text"></i></span><span class="nav-label"><strong>Voucher</strong><small>ဘောက်ချာများ</small></span></a>
+          <a href="#receivables" data-nav="receivables"><span class="nav-icon" aria-hidden="true"><i data-lucide="hand-coins"></i></span><span class="nav-label"><strong>ကျန်ငွေရရန်</strong><small>Receivables</small></span><span class="nav-badge" data-nav-badge="receivables" hidden>0</span></a>
+          <a href="#codecheck" data-nav="codecheck"><span class="nav-icon" aria-hidden="true"><i data-lucide="scan-search"></i></span><span class="nav-label"><strong>Code Check</strong><small>ကုဒ်စစ်ဆေးရန်</small></span><span class="nav-badge" data-nav-badge="codecheck" hidden>0</span></a>
+          <a href="#production" data-nav="production" hidden><span class="nav-icon" aria-hidden="true"><i data-lucide="hammer"></i></span><span class="nav-label"><strong>Production</strong><small>အော်ဒါလုပ်ငန်း</small></span><span class="nav-badge" data-nav-badge="production" hidden>0</span></a>
+          <a href="#cashfloat" data-nav="cashfloat"><span class="nav-icon" aria-hidden="true"><i data-lucide="banknote"></i></span><span class="nav-label"><strong>Cash Float</strong><small>ငွေသားလက်ကျန်</small></span></a>
+          <a href="#expense" data-nav="expense"><span class="nav-icon" aria-hidden="true"><i data-lucide="wallet-cards"></i></span><span class="nav-label"><strong>Daily Expense</strong><small>နေ့စဉ်အသုံးစရိတ်</small></span></a>
+          <a href="#finance" data-nav="finance"><span class="nav-icon" aria-hidden="true"><i data-lucide="landmark"></i></span><span class="nav-label"><strong>Finance</strong><small>ငွေစာရင်း</small></span></a>
+          <a href="#fulfillment" data-nav="fulfillment"><span class="nav-icon" aria-hidden="true"><i data-lucide="truck"></i></span><span class="nav-label"><strong>Pickup</strong><small>ပစ္စည်းပေးရန်</small></span><span class="nav-badge" data-nav-badge="fulfillment" hidden>0</span></a>
+          <a href="#stock-inventory" data-nav="stock-inventory"><span class="nav-icon" aria-hidden="true"><i data-lucide="warehouse"></i></span><span class="nav-label"><strong>Stock Inventory</strong><small>ဆိုင်ထဲမရောက်သေး</small></span></a>
+          <a href="#shop-inventory" data-nav="shop-inventory"><span class="nav-icon" aria-hidden="true"><i data-lucide="store"></i></span><span class="nav-label"><strong>Shop Inventory</strong><small>ဆိုင်အရောင်းလက်ကျန်</small></span></a>
+          <a href="#stock-audit" data-nav="stock-audit"><span class="nav-icon" aria-hidden="true"><i data-lucide="scan-line"></i></span><span class="nav-label"><strong>Stock စာရင်းစစ်</strong><small>Barcode ဖြင့် စစ်ရန်</small></span></a>
+          <a href="#reports" data-nav="reports"><span class="nav-icon" aria-hidden="true"><i data-lucide="chart-no-axes-combined"></i></span><span class="nav-label"><strong>စာရင်းချုပ်</strong><small>Reports</small></span></a>
+          <a href="#settings" data-nav="settings"><span class="nav-icon" aria-hidden="true"><i data-lucide="settings"></i></span><span class="nav-label"><strong>Setting</strong><small>စနစ်ပြင်ဆင်ရန်</small></span></a>
         </nav>
         <div class="sync-note">
           <strong id="currentStaffName">Not logged in</strong>
           <span id="currentStaffRole">Permission pending</span>
-          <button class="button logout-button" type="button" id="logoutButton">Log Out</button>
+          <div class="cloud-sync-control">
+            <span id="cloudSyncStatus" data-state="connecting">Cloud ချိတ်ဆက်နေသည်…</span>
+          </div>
+          <button class="theme-toggle" type="button" id="themeToggle" aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode" onclick="toggleThemeMode()">
+            <span class="theme-toggle-icon" aria-hidden="true"><i data-lucide="moon"></i></span>
+            <span id="themeToggleLabel">Dark Mode</span>
+          </button>
+          <button class="button logout-button" type="button" id="logoutButton" title="Log Out">
+            <span class="logout-icon" aria-hidden="true"><i data-lucide="log-out"></i></span>
+            <span class="logout-label">Log Out</span>
+          </button>
         </div>
       </aside>
 
       <main class="workspace">
         <section class="protected view-section" id="home" data-view="home" data-permission="home">
-          <header class="topbar">
+          <header class="home-heading">
+            <button class="home-group-back" type="button" id="homeGroupBack" hidden aria-label="Main menu သို့ပြန်ရန်"><i data-lucide="arrow-left" aria-hidden="true"></i></button>
             <div>
-              <p class="eyebrow">Daily Start</p>
-              <h1>B3 Floral EBS</h1>
+              <p class="eyebrow" id="homeEyebrow">B3 Floral EBS</p>
+              <h1 id="homeTitle">ဘယ်အပိုင်းကို သုံးမလဲ?</h1>
+              <p class="home-description" id="homeDescription">လုပ်ငန်းအပိုင်းကို အရင်ရွေးပါ။</p>
             </div>
           </header>
 
-          <div class="quick-action-grid" id="quickActionGrid" aria-label="Quick actions"></div>
+          <div class="home-group-grid" id="homeGroupGrid" aria-label="လုပ်ငန်းအပိုင်းများ"></div>
+          <section class="sale-account-home" id="saleAccountHome" hidden aria-labelledby="saleAccountHomeTitle">
+            <div class="sale-account-home-heading">
+              <div>
+                <p class="eyebrow">Sale Team</p>
+                <h2 id="saleAccountHomeTitle">Sale လုပ်ငန်းများ</h2>
+              </div>
+              <span>လိုအပ်တာကို တိုက်ရိုက်ရွေးပါ</span>
+            </div>
+            <div class="quick-action-grid" id="saleAccountActions" aria-label="Sale လုပ်ငန်းများ"></div>
+            <article class="production-compose sale-home-production-compose" id="saleHomeProductionOrder">
+              <div class="panel-subhead">
+                <h3>Production Order တင်ရန်</h3>
+                <span class="status-pill" id="productionComposeStatus">Ready</span>
+              </div>
+              <div class="form-grid compact-form">
+                <label>
+                  Voucher Number
+                  <input id="productionOrderVoucher" placeholder="V-1023" />
+                </label>
+                <label>
+                  Urgency (Manual)
+                  <input id="productionOrderUrgency" placeholder="ဥပမာ - အရေးကြီး၊ မနက် ၁၀ နာရီအမီ" />
+                </label>
+                <label>
+                  Pickup / Delivery Date
+                  <input id="productionOrderDate" type="date" />
+                </label>
+                <label>
+                  Photo
+                  <input id="productionOrderPhotos" type="file" accept="image/*" multiple />
+                </label>
+                <label class="wide">
+                  Customer Requirement
+                  <textarea id="productionOrderRequirement" rows="3" placeholder="ပန်းအရောင်၊ design, customer မှာထားတာ၊ photo reference အကြောင်း"></textarea>
+                </label>
+                <div class="photo-preview-list wide" id="productionOrderPhotoPreview"></div>
+                <div class="form-actions wide">
+                  <button class="button secondary" type="button" id="sendProductionOrderButton">Order တင်မယ်</button>
+                  <button class="button ghost" type="button" id="cancelProductionEditButton" hidden>Cancel Edit</button>
+                </div>
+              </div>
+            </article>
+          </section>
+          <section class="sale-account-home admin-direct-home" id="adminDirectHome" hidden aria-labelledby="adminDirectHomeTitle">
+            <div class="sale-account-home-heading">
+              <div>
+                <p class="eyebrow">Quick Access</p>
+                <h2 id="adminDirectHomeTitle">Finance, Reports & Settings</h2>
+              </div>
+              <span>Home မှ တိုက်ရိုက်ရွေးပါ</span>
+            </div>
+            <div class="quick-action-grid" id="adminDirectActions" aria-label="Finance, Reports နှင့် Settings"></div>
+          </section>
+          <div class="quick-action-grid" id="quickActionGrid" aria-label="ရွေးထားသောလုပ်ငန်းများ" hidden></div>
 
-          <div class="work-queue-grid" aria-label="Today work queue">
+          <div class="work-queue-grid" id="homeWorkQueues" aria-label="Today work queue">
             <article class="panel queue-panel">
               <div class="panel-subhead">
                 <h3>Today Work Queue</h3>
@@ -91,23 +187,23 @@
         </section>
 
         <section class="protected view-section" id="dashboard" data-view="dashboard" data-permission="dashboard">
-          <header class="topbar">
+          <header class="topbar" id="dashboardLegacyHeader">
             <div>
               <p class="eyebrow">Floral Shop Management</p>
               <h1>ပန်းစည်းလုပ်ငန်းစာရင်းကို တစ်နေရာတည်းကနေထိန်းချုပ်ရန်</h1>
             </div>
-            <div class="top-actions" data-dashboard-permission="reports">
+            <div class="top-actions" data-dashboard-permission="reports" data-report-sensitive>
               <button class="button ghost" type="button" id="exportButton">Export</button>
               <button class="button ghost" type="button" id="importButton">Import</button>
               <button class="button ghost danger-text" type="button" id="resetButton" data-dashboard-permission="settings">Reset Data</button>
             </div>
           </header>
 
-          <div class="metric-grid" aria-label="Today dashboard">
+          <div class="metric-grid" id="dashboardMetricGrid" aria-label="Today dashboard">
           <article class="metric" data-dashboard-permission="inventory">
-            <span>Available Stock</span>
+            <span>Shop Sale Stock</span>
             <strong id="metricStock">0</strong>
-            <small>ရောင်းရန်ကျန်</small>
+            <small>ဆိုင်မှာရောင်းရန်ရှိသောလက်ကျန်</small>
           </article>
           <article class="metric" data-dashboard-permission="sale">
             <span>Today Cash Received</span>
@@ -119,10 +215,10 @@
             <strong id="metricExpense">0 MMK</strong>
             <small>ယနေ့အထွက်</small>
           </article>
-          <article class="metric" data-dashboard-permission="reports">
+          <article class="metric" data-dashboard-permission="reports" data-report-sensitive>
             <span>Today Net Cash</span>
             <strong id="metricNet">0 MMK</strong>
-            <small>Received - Sold Cost - Expense</small>
+            <small>Received - Cash Bouquet Money - Expense</small>
           </article>
           <article class="metric dashboard-hidden-metric" hidden>
             <span>Production Pending</span>
@@ -135,7 +231,250 @@
             <small>ပစ္စည်းပေးရန်ကျန်</small>
           </article>
           </div>
-          <div class="panel history-panel" data-dashboard-permission="sale">
+          <article class="panel admin-cash-manager" id="adminCashManager" hidden>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Admin Cash Control</p>
+                <h2>Business / Personal / Production Cash</h2>
+                <p class="cash-float-description">လတစ်လချင်းစီကို သီးခြား Cash Period အဖြစ်ထားပြီး လအစ Opening Balance မှစ၍ စာရင်းစစ်ရန်</p>
+              </div>
+              <span class="status-pill" id="adminCashStatus">လအလိုက် Cash စာရင်း</span>
+            </div>
+
+            <div class="admin-cash-period-bar" aria-label="Cash Management month selector">
+              <button class="icon-button" id="adminCashPreviousMonth" type="button" title="အရင်လ" aria-label="အရင်လ"><i data-lucide="chevron-left"></i></button>
+              <label>
+                <span class="label-title">Cash Period / စာရင်းလ</span>
+                <input id="adminCashMonth" type="month" min="2026-09" />
+              </label>
+              <button class="icon-button" id="adminCashNextMonth" type="button" title="နောက်လ" aria-label="နောက်လ"><i data-lucide="chevron-right"></i></button>
+              <div>
+                <strong id="adminCashPeriodTitle">လစဉ် Cash Management</strong>
+                <small>ရွေးထားသောလ၏ data ကိုသာ ပြမည်</small>
+              </div>
+            </div>
+
+            <div class="admin-cash-stepper" id="adminCashStepper" role="tablist" aria-label="Cash Management sections">
+              <button class="admin-cash-step is-active" type="button" role="tab" aria-selected="true" data-admin-cash-step="accounts">
+                <span>1</span><strong>Cash Accounts</strong><small>လက်ကျန်နှင့် အသွင်း/အထုတ်</small>
+              </button>
+              <button class="admin-cash-step" type="button" role="tab" aria-selected="false" data-admin-cash-step="ledger">
+                <span>2</span><strong>Ledger</strong><small>Cash movement စာရင်း</small>
+              </button>
+              <button class="admin-cash-step" type="button" role="tab" aria-selected="false" data-admin-cash-step="usage">
+                <span>3</span><strong>Production Usage</strong><small>Code / Voucher အသုံး</small>
+              </button>
+              <button class="admin-cash-step" type="button" role="tab" aria-selected="false" data-admin-cash-step="daily">
+                <span>4</span><strong>Daily Reconciliation</strong><small>ရက်အလိုက် စာရင်းချုပ်</small>
+              </button>
+            </div>
+
+            <section class="admin-cash-step-panel is-active" data-admin-cash-panel="accounts" role="tabpanel">
+
+            <div class="cash-float-summary" aria-label="Admin cash summary">
+              <article>
+                <span>Business Cash လက်ကျန်</span>
+                <strong id="adminBusinessCash">0 MMK</strong>
+              </article>
+              <article>
+                <span>Personal Cash လက်ကျန်</span>
+                <strong id="adminPersonalCash">0 MMK</strong>
+              </article>
+              <article class="available">
+                <span>Production Float လက်ကျန်</span>
+                <strong id="adminProductionCash">0 MMK</strong>
+              </article>
+              <article>
+                <span>ငွေသားပန်းစည်းသုံးငွေ</span>
+                <strong id="adminCashUsed">0 MMK</strong>
+              </article>
+            </div>
+            <div class="business-cash-breakdown" id="adminBusinessCashBreakdown" aria-label="Business Cash account breakdown"></div>
+
+            <div class="admin-cash-forms">
+              <details class="admin-opening-balance" id="adminCashAccountsSection" open>
+                <summary>Opening Balance ပြန်ပြင်ရန်</summary>
+              <form class="form-grid compact-form" id="adminCashAccountsForm" autocomplete="off">
+                <div class="wide panel-subhead">
+                  <div><p class="eyebrow">Opening Balance</p><h3>စတင်ငွေ သတ်မှတ်ရန်</h3></div>
+                </div>
+                <label>
+                  <span class="label-title">စတင်ရက်</span>
+                  <input name="effectiveDate" type="date" value="2026-10-01" readonly />
+                </label>
+                <label><span class="label-title">Business Cash — Cash</span><input name="businessOpeningCash" type="number" min="0" step="1" placeholder="0" /></label>
+                <label><span class="label-title">Business Cash — KPay</span><input name="businessOpeningKpay" type="number" min="0" step="1" placeholder="0" /></label>
+                <label><span class="label-title">Business Cash — AYA Pay</span><input name="businessOpeningAyaPay" type="number" min="0" step="1" placeholder="0" /></label>
+                <label><span class="label-title">Business Cash — AYA Banking</span><input name="businessOpeningAyaBanking" type="number" min="0" step="1" placeholder="0" /></label>
+                <label><span class="label-title">Business Cash — Wave</span><input name="businessOpeningWave" type="number" min="0" step="1" placeholder="0" /></label>
+                <label><span class="label-title">Business Cash — Banking</span><input name="businessOpeningBanking" type="number" min="0" step="1" placeholder="0" /></label>
+                <label>
+                  <span class="label-title">Personal Cash</span>
+                  <input name="personalOpening" type="number" min="0" step="1" placeholder="0" />
+                </label>
+                <label>
+                  <span class="label-title" id="adminProductionOpeningLabel">Production Cash</span>
+                  <input name="productionOpening" type="number" min="0" step="1" placeholder="0" />
+                  <small id="adminProductionOpeningHint">September စတင်ငွေကို သတ်မှတ်ပါ</small>
+                </label>
+                <label>
+                  <span class="label-title">မှတ်ချက်</span>
+                  <input name="note" placeholder="ဥပမာ - 1 Oct Business opening cash" />
+                </label>
+                <div class="form-actions wide">
+                  <button class="button secondary" type="submit">စတင်ငွေ သိမ်းမယ်</button>
+                </div>
+              </form>
+              </details>
+
+              <form class="form-grid compact-form" id="adminCashTransferForm" autocomplete="off">
+                <div class="wide panel-subhead">
+                  <div><p class="eyebrow">Transfer / Give</p><h3>Cash Account အလွှဲအပြောင်း</h3></div>
+                </div>
+                <label>
+                  <span class="label-title">ပေးမည့် Account</span>
+                  <select name="fromAccount">
+                    <option value="business">Business Cash</option>
+                    <option value="personal">Personal Cash</option>
+                    <option value="production">Production Cash</option>
+                  </select>
+                </label>
+                <label>
+                  <span class="label-title">လက်ခံမည့် Account / အသုံး</span>
+                  <select name="toAccount">
+                    <option value="production">Production Cash</option>
+                    <option value="business">Business Cash</option>
+                    <option value="personal">Personal Cash</option>
+                    <option value="outside">Cash Use / အပြင်ထုတ်</option>
+                  </select>
+                </label>
+                <label id="adminCashFromChannelField">
+                  <span class="label-title">ပေးမည့် Business Cash Channel (Business → Production = Cash only)</span>
+                  <select name="businessChannel">
+                    <option value="cash">Cash</option>
+                    <option value="kpay">KPay</option>
+                    <option value="aya_pay">AYA Pay</option>
+                    <option value="aya_banking">AYA Banking</option>
+                    <option value="wave">Wave</option>
+                    <option value="banking">Banking</option>
+                  </select>
+                </label>
+                <label id="adminCashToChannelField" hidden>
+                  <span class="label-title">လက်ခံမည့် Business Cash Channel</span>
+                  <select name="toBusinessChannel">
+                    <option value="cash">Cash</option>
+                    <option value="kpay">KPay</option>
+                    <option value="aya_pay" selected>AYA Pay</option>
+                    <option value="aya_banking">AYA Banking</option>
+                    <option value="wave">Wave</option>
+                    <option value="banking">Banking</option>
+                  </select>
+                </label>
+                <label>
+                  <span class="label-title">Transfer Date</span>
+                  <input name="transferDate" type="date" min="2026-10-01" required />
+                </label>
+                <label>
+                  <span class="label-title">ငွေပမာဏ</span>
+                  <input name="amount" type="number" min="1" step="1" required />
+                </label>
+                <label>
+                  <span class="label-title">မှတ်ချက်</span>
+                  <input name="note" placeholder="ဥပမာ - Production အတွက်ထုတ်ပေး" />
+                </label>
+                <div class="form-actions wide">
+                  <button class="button primary" type="submit">Transfer / Give သိမ်းမယ်</button>
+                </div>
+              </form>
+
+              <form class="form-grid compact-form" id="adminDailyCashSaleForm" autocomplete="off">
+                <div class="wide panel-subhead">
+                  <div><p class="eyebrow">Daily Cash Closing</p><h3>Business Cash ပေါင်း / Expense Shortfall လျှော့ရန်</h3></div>
+                </div>
+                <label>
+                  <span class="label-title">ရောင်းသည့်ရက်</span>
+                  <input name="saleDate" type="date" min="2026-10-01" required />
+                </label>
+                <label>
+                  <span class="label-title">စာရင်းပိတ်လုပ်ဆောင်ချက်</span>
+                  <select name="settlementType">
+                    <option value="deposit">Business Cash ထဲ ပေါင်းမယ်</option>
+                    <option value="expense_shortfall">Expense Shortfall — Business Cash က လျှော့မယ်</option>
+                  </select>
+                </label>
+                <label>
+                  <span class="label-title">Business Cash Account</span>
+                  <select name="businessChannel">
+                    <option value="cash">Cash</option>
+                    <option value="kpay">KPay</option>
+                    <option value="aya_pay">AYA Pay</option>
+                    <option value="aya_banking">AYA Banking</option>
+                    <option value="wave">Wave</option>
+                    <option value="banking">Banking</option>
+                  </select>
+                </label>
+                <label>
+                  <span class="label-title">ငွေပမာဏ</span>
+                  <input name="amount" type="number" min="0" step="1" required />
+                </label>
+                <label class="wide">
+                  <span class="label-title">မှတ်ချက်</span>
+                  <input name="note" placeholder="ဥပမာ - Cash Expense ပိုသုံးထားသည့် လိုငွေ" />
+                </label>
+                <div class="form-actions wide">
+                  <button class="button primary" type="submit">Cash Closing သိမ်းမယ်</button>
+                </div>
+              </form>
+            </div>
+            </section>
+
+            <section class="admin-cash-step-panel" data-admin-cash-panel="ledger" role="tabpanel" hidden>
+              <div class="panel-subhead admin-cash-step-heading">
+                <div><p class="eyebrow">Cash Ledger</p><h3>Cash Movement စာရင်း</h3></div>
+              </div>
+              <div class="table-wrap admin-cash-ledger-wrap">
+                <table class="compact-record-table">
+                  <thead><tr><th>Date</th><th>Movement</th><th>Amount</th><th>မှတ်ချက်</th><th>Action</th></tr></thead>
+                  <tbody id="adminCashLedger"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="admin-cash-step-panel" data-admin-cash-panel="usage" role="tabpanel" hidden>
+              <div class="panel-subhead admin-production-usage-heading">
+                <div>
+                  <p class="eyebrow">Production Cash Usage</p>
+                  <h3>ငွေဘယ်မှာသုံးထားသလဲ — Product Code / Voucher SKU MM</h3>
+                  <p class="cash-float-description">Voucher SKU MM ကို Order Date မဟုတ်ဘဲ ပစ္စည်းပေးရမည့်ရက်တွင် Production Cash မှနှုတ်ထားသည်</p>
+                </div>
+              </div>
+              <div class="table-wrap admin-cash-ledger-wrap">
+                <table class="compact-record-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>အသုံးအမျိုးအစား</th>
+                      <th>Product Code</th>
+                      <th>Voucher No.</th>
+                      <th>Item / Qty</th>
+                      <th>Production Cash သုံးငွေ</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminProductionCashUsage"></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="admin-cash-step-panel admin-production-daily-section" data-admin-cash-panel="daily" role="tabpanel" aria-labelledby="adminProductionDailyTotalsTitle" hidden>
+              <div class="panel-subhead">
+                <div>
+                  <p class="eyebrow">Daily Reconciliation</p>
+                  <h3 id="adminProductionDailyTotalsTitle">ရက်အလိုက် Production Cash သုံးငွေစုစုပေါင်း</h3>
+                </div>
+              </div>
+              <div class="admin-production-daily-totals" id="adminProductionDailyTotals"></div>
+            </section>
+          </article>
+          <div class="panel history-panel" id="dashboardHistoryPanel" data-dashboard-permission="sale">
             <div>
               <h3>Recent Sales</h3>
               <div class="mini-table" id="salesHistory"></div>
@@ -150,60 +489,89 @@
         <section class="panel protected view-section" id="stock" data-view="stock" data-permission="stock">
             <div class="panel-heading">
               <div>
-                <p class="eyebrow">Production Team</p>
-                <h2>Stock စထည့်ရန်</h2>
+                <p class="eyebrow">Stock Team</p>
+                <h2>Stock ပစ္စည်းအသစ်ထည့်ရန်</h2>
               </div>
-              <span class="status-pill" id="stockStatus">Ready</span>
+              <span class="status-pill" id="stockStatus">အသင့်</span>
             </div>
 
             <form class="form-grid" id="stockForm" autocomplete="off">
               <input type="hidden" name="stockMode" id="stockMode" value="floral" />
-              <div class="stock-mode-switch wide" id="stockModeSwitch" aria-label="Stock type">
-                <button class="segmented stock-mode-button is-active" type="button" data-stock-entry-mode="floral">Floral Production</button>
-                <button class="segmented stock-mode-button" type="button" data-stock-entry-mode="sku">SKU Purchase</button>
+              <div class="stock-mode-switch wide" id="stockModeSwitch" aria-label="Stock ထည့်သည့်ပုံစံ">
+                <button class="segmented stock-mode-button is-active" type="button" data-stock-entry-mode="floral">ပန်းစည်းတစ်ခုချင်းထည့်ရန်</button>
+                <button class="segmented stock-mode-button" type="button" data-stock-entry-mode="sku">SKU ပစ္စည်းအရေအတွက်လိုက်ထည့်ရန်</button>
               </div>
               <label>
-                <span class="label-title">Category <span class="req">*</span></span>
+                <span class="label-title">ပစ္စည်းအမျိုးအစား <span class="req">*</span></span>
                 <select name="category" id="stockCategory" required></select>
               </label>
               <label>
-                <span class="label-title">Sub Category</span>
+                <span class="label-title">အမျိုးအစားခွဲ</span>
                 <select name="subCategory" id="stockSubCategory"></select>
               </label>
               <label>
-                <span class="label-title">Product Code <span class="req">*</span></span>
+                <span class="label-title">Product Code (ပစ္စည်းကုဒ်) <span class="req">*</span></span>
                 <input name="productCode" placeholder="FS-0001" required />
+                <datalist id="stockSkuOptions"></datalist>
               </label>
               <label>
-                <span class="label-title" id="stockDateLabel">Production Date <span class="req">*</span></span>
+                <span class="label-title" id="stockDateLabel">ထုတ်လုပ်သည့်ရက် <span class="req">*</span></span>
                 <input name="productionDate" type="date" required />
               </label>
+              <label>
+                <span class="label-title">Inventory နေရာ <span class="req">*</span></span>
+                <select name="inventoryLocation" required>
+                  <option value="pending" selected>ဆိုင်ထဲမရောက်သေး</option>
+                  <option value="shop">ဆိုင်အရောင်း Inventory</option>
+                </select>
+                <small>ပစ္စည်းလက်ရှိရှိနေသည့်နေရာကို ရွေးပါ</small>
+              </label>
+              <div class="stock-restock-hint wide" id="stockSkuRestockHint" hidden></div>
               <label class="wide">
-                <span class="label-title">Description <span class="req">*</span></span>
-                <input name="description" placeholder="Red rose bouquet, medium size" required />
+                <span class="label-title">ပစ္စည်းအကြောင်းအရာ <span class="req">*</span></span>
+                <input name="description" placeholder="ဥပမာ - နှင်းဆီပန်းစည်း အနီရောင် အလတ်စား" required />
               </label>
               <label data-stock-mode="floral">
-                <span class="label-title">Paper Color <span class="req">*</span></span>
-                <input name="paperColor" placeholder="Pink / White / Kraft" required />
+                <span class="label-title">စက္ကူအရောင် <span class="req">*</span></span>
+                <input name="paperColor" placeholder="ဥပမာ - ပန်းရောင် / အဖြူ / Kraft" required />
               </label>
               <label data-stock-mode="sku" hidden>
-                <span class="label-title">Quantity <span class="req">*</span></span>
+                <span class="label-title">အရေအတွက် <span class="req">*</span></span>
                 <input name="quantity" type="number" min="1" step="1" value="1" />
               </label>
-              <label>
-                <span class="label-title" id="stockCostLabel">Production Cost</span>
-                <input name="productionCost" type="number" min="0" step="1" placeholder="35000" />
+              <label class="cash-value-field" id="stockCashValueField" hidden>
+                <span class="label-title">ပန်းစည်းထဲထည့်သည့် ငွေသား <span class="req">*</span></span>
+                <input name="cashValue" type="number" min="1" step="1" placeholder="500000" />
+                <small id="stockCashFloatHint">Production Cash Float လက်ကျန်စစ်ရန်</small>
               </label>
               <label>
-                <span class="label-title">Sale Price</span>
+                <span class="label-title">ရောင်းဈေး</span>
                 <input name="salePrice" type="number" min="0" step="1" placeholder="65000" />
               </label>
               <label data-stock-mode="floral">
                 <span class="label-title">Florist <span class="req">*</span></span>
                 <select name="florist" id="stockFlorist" required></select>
               </label>
+              <div class="stock-photo-field wide" data-stock-mode="floral">
+                <div class="stock-photo-heading">
+                  <div>
+                    <span class="label-title">ပန်းစည်းဓာတ်ပုံ <span class="req">*</span></span>
+                    <small>Product Code နဲ့တွဲသိမ်းရန် ပုံရိုက်ပါ။ ပုံကို upload မတင်ခင် အလိုအလျောက်ချုံ့ပေးပါမယ်။</small>
+                  </div>
+                  <label class="button secondary stock-photo-picker">
+                    <i data-lucide="camera" aria-hidden="true"></i>
+                    <span id="stockPhotoPickerLabel">ပုံရိုက် / ပုံရွေး</span>
+                    <input id="stockPhotoInput" type="file" accept="image/*" capture="environment" />
+                  </label>
+                </div>
+                <div class="stock-photo-preview" id="stockPhotoPreview" aria-live="polite">
+                  <div class="stock-photo-empty"><i data-lucide="image-plus" aria-hidden="true"></i><span>ပန်းစည်းပုံ မထည့်ရသေးပါ</span></div>
+                </div>
+              </div>
               <div class="form-actions wide">
-                <button class="button primary" type="submit">+ Stock ထည့်မယ်</button>
+                <button class="button primary" type="submit"><i data-lucide="plus" aria-hidden="true"></i> Stock ထည့်ပြီး သိမ်းမယ်</button>
+                <button class="button secondary" type="button" id="printLatestButton">နောက်ဆုံးထည့်ထားသည့် Stock Sticker ထုတ်မယ်</button>
+                <button class="button ghost" type="button" id="openStickerButton">အရင် Stock / အများကြီး Sticker ထုတ်မယ်</button>
               </div>
             </form>
         </section>
@@ -226,8 +594,12 @@
                 <input id="stickerCodeInput" list="stickerCodeOptions" placeholder="M0007" />
                 <datalist id="stickerCodeOptions"></datalist>
               </label>
+              <label>
+                Sticker အရေအတွက်
+                <input id="stickerCopies" type="number" min="1" max="100" step="1" value="1" />
+              </label>
               <div class="sticker-add-actions">
-                <button class="button secondary" type="button" id="addStickerCodeButton">+ Add</button>
+                <button class="button secondary" type="button" id="addStickerCodeButton"><i data-lucide="plus" aria-hidden="true"></i> Add</button>
                 <button class="button ghost danger-text" type="button" id="clearStickerQueueButton">Clear</button>
               </div>
               <div class="sticker-queue wide" id="stickerQueue"></div>
@@ -260,31 +632,43 @@
                   <option value="light">Light border</option>
                 </select>
               </label>
+              <label>
+                Printer Resolution
+                <select id="stickerDpi">
+                  <option value="203">203 DPI — XPrinter XP-365B</option>
+                  <option value="300">300 DPI</option>
+                </select>
+              </label>
             </div>
             <div class="label-preview" id="labelPreview">
-              <span>B3 Floral Shop</span>
               <strong id="labelCode">No stock selected</strong>
+              <div class="label-barcode" id="labelBarcode" aria-label="Product barcode"></div>
               <small id="labelDescription">Stock ထည့်ပြီး sticker ထုတ်ပါ</small>
               <b id="labelPrice">Sale Price</b>
             </div>
-            <button class="button primary full-width" type="button" id="printStickerButton">Print Sticker</button>
+            <div class="sticker-print-actions">
+              <button class="button secondary" type="button" id="addOldDesignAvailableStickersButton"><i data-lucide="layers" aria-hidden="true"></i> Design အဟောင်း Available အားလုံးထည့်</button>
+              <button class="button primary" type="button" id="printStickerButton">PC မှ Print Sticker</button>
+              <button class="button secondary" type="button" id="shareStickerButton">XPrinter App အတွက် PNG သိမ်းမယ်</button>
+            </div>
+            <p class="sticker-mobile-hint">iPhone တွင် PNG သိမ်းမယ်ကိုနှိပ်၍ <strong>Save Image</strong> သို့မဟုတ် <strong>Save to Files</strong> ရွေးပါ။ ထို့နောက် XPrinter app ကိုဖွင့် → Image/Picture Print → သိမ်းထားသော PNG ကိုရွေး → paper size ကို Label Setting နှင့်တူအောင်ထားပြီး Fit/Crop မလုပ်ဘဲ Original / 100% ဖြင့်ထုတ်ပါ။ XP-365B အတွက် 203 DPI ကိုသုံးပါ။</p>
         </section>
 
         <section class="panel protected view-section" id="sale" data-view="sale" data-permission="sale">
-          <div class="panel-heading">
+          <div class="panel-heading sale-heading">
             <div>
               <p class="eyebrow">Cashier</p>
               <h2>Voucher Sale ထည့်ရန်</h2>
             </div>
-            <span class="status-pill" id="saleStatus">Item ထည့်ပြီး voucher သိမ်းပါ</span>
-          </div>
-
-          <div class="draft-bar">
-            <div class="draft-actions">
-              <button class="button primary" type="button" id="newVoucherButton">+ New Voucher</button>
-              <button class="button secondary" type="button" id="holdVoucherButton">Hold</button>
+            <div class="sale-heading-actions">
+              <span class="status-pill" id="saleStatus">Item ထည့်ပြီး voucher သိမ်းပါ</span>
               <button class="button ghost danger-text" type="button" id="deleteDraftButton">Delete Draft</button>
             </div>
+          </div>
+
+          <div class="cashier-legacy-draft-controls" hidden aria-hidden="true">
+            <button type="button" id="newVoucherButton"><i data-lucide="plus" aria-hidden="true"></i> New Voucher</button>
+            <button type="button" id="holdVoucherButton">Hold</button>
             <div class="draft-list" id="draftList"></div>
           </div>
 
@@ -306,18 +690,52 @@
               </div>
 
               <form class="form-grid sale-top-form sale-step-panel is-active" id="saleForm" data-step-panel="info" autocomplete="off">
+                <section class="cashier-field-group cashier-field-group--primary">
+                  <div class="cashier-group-heading">
+                    <strong>Sale Information</strong>
+                    <span>လိုအပ်သောအကွက်များ</span>
+                  </div>
+                  <div class="cashier-field-grid cashier-field-grid--three">
                 <label>
-                  Sale Date
+                  <span class="cashier-label">Sale Date <b>Required</b></span>
                   <input name="saleDate" type="date" required />
                 </label>
                 <label>
-                  Voucher Number
+                  <span class="cashier-label">Voucher Number <b>Required</b></span>
                   <input name="voucherNumber" placeholder="V-1023" required />
                 </label>
                 <label>
-                  Sale Person
+                  <span class="cashier-label">Sale Person <b>Required</b></span>
                   <select name="salePerson" id="salePerson" required></select>
                 </label>
+                  </div>
+                </section>
+                <section class="cashier-field-group cashier-field-group--secondary">
+                  <div class="cashier-group-heading">
+                    <strong>Customer Information</strong>
+                    <span>Customer ကို ပြန်ဆက်သွယ်နိုင်ရန် မှတ်ထားပါ</span>
+                  </div>
+                  <div class="cashier-field-grid cashier-field-grid--three">
+                    <label>
+                      <span class="cashier-label">Customer Name <b>Optional</b></span>
+                      <input name="customerName" placeholder="Customer အမည်" />
+                    </label>
+                    <label>
+                      <span class="cashier-label">Phone / Viber <b>Optional</b></span>
+                      <input name="customerPhone" type="tel" inputmode="tel" placeholder="09xxxxxxxxx" />
+                    </label>
+                    <label>
+                      <span class="cashier-label">Address / Contact Note <b>Optional</b></span>
+                      <input name="customerAddress" placeholder="ပို့ရမည့်လိပ်စာ / Facebook name" />
+                    </label>
+                  </div>
+                </section>
+                <section class="cashier-field-group cashier-field-group--secondary">
+                  <div class="cashier-group-heading">
+                    <strong>Pickup / Delivery</strong>
+                    <span>Customer ကိုပစ္စည်းပေးမည့်အချက်အလက်</span>
+                  </div>
+                  <div class="cashier-field-grid cashier-field-grid--three">
                 <label>
                   ပစ္စည်းပေးရမည့်ရက်
                   <input name="fulfillmentDate" type="date" />
@@ -337,6 +755,8 @@
                     <option value="delivered">ပေးပြီး</option>
                   </select>
                 </label>
+                  </div>
+                </section>
               </form>
 
               <div class="item-builder sale-step-panel" data-step-panel="items">
@@ -358,28 +778,53 @@
                     <button class="segmented item-mode-button" type="button" data-sale-item-mode="sku">SKU Qty</button>
                     <button class="segmented item-mode-button" type="button" data-sale-item-mode="manual">Manual</button>
                   </div>
-                  <label data-item-mode="stock sku">
-                    Product Code / SKU
+                  <section class="cashier-field-group cashier-field-group--primary wide">
+                    <div class="cashier-group-heading">
+                      <strong>Product ရွေးရန်</strong>
+                      <span>Code မရှိသော item ဆိုရင် blank ထားနိုင်ပါတယ်</span>
+                    </div>
+                    <div class="cashier-field-grid">
+                  <label class="wide" data-item-mode="stock sku">
+                    <span class="cashier-label">Product Code / SKU <b>Code ရှိမှသာ</b></span>
                     <input id="saleProductCode" list="saleProductCodeOptions" placeholder="FS-0001" />
                     <datalist id="saleProductCodeOptions"></datalist>
                   </label>
                   <div class="lookup-card wide" id="stockLookupDetails" data-item-mode="stock sku">
                     <span>Product code ထည့်လိုက်ရင် stock description, category, paper color တွေဒီမှာပြမယ်။</span>
                   </div>
+                    </div>
+                  </section>
+                  <section class="cashier-field-group wide">
+                    <div class="cashier-group-heading">
+                      <strong>ရောင်းမည့်အချက်အလက်</strong>
+                      <span>Item အမည်၊ အရေအတွက်နဲ့ ရောင်းဈေး</span>
+                    </div>
+                    <div class="cashier-field-grid cashier-field-grid--item">
                   <label data-item-mode="stock manual sku">
-                    Description
+                    <span class="cashier-label">Description <b>Item အမည်</b></span>
                     <input id="manualDescription" placeholder="Pre-order bouquet / Cake / Doll / Delivery fee" />
                   </label>
                   <label>
-                    Quantity
+                    <span class="cashier-label">Quantity <b>အရေအတွက်</b></span>
                     <input id="saleItemQty" type="number" min="1" step="1" value="1" />
                   </label>
-                  <label>
-                    Amount
+                  <label class="cashier-money-field">
+                    <span class="cashier-label">Sale Amount <b>ရောင်းဈေး</b></span>
                       <input id="saleItemPrice" type="number" min="0" step="1" value="0" placeholder="0" />
                   </label>
-                  <div class="form-actions wide">
-                    <button class="button secondary" type="button" id="addSaleItemButton">+ Item ထည့်မယ်</button>
+                  <label class="cashier-money-field">
+                    <span class="cashier-label">Bouquet Cash / Unit COGS <b>ပန်းစည်းထဲထည့်သည့်ငွေသား</b></span>
+                    <input id="saleItemCost" type="number" min="0" step="1" value="0" placeholder="0" />
+                  </label>
+                  <label class="checkbox-label" data-item-mode="stock manual sku">
+                    <input id="saleRequiresCode" type="checkbox" />
+                    Code လို
+                  </label>
+                    </div>
+                  </section>
+                  <div class="form-actions wide cashier-item-actions">
+                    <button class="button secondary" type="button" id="addSaleItemButton"><i data-lucide="plus" aria-hidden="true"></i> Item ထည့်မယ်</button>
+                    <button class="button ghost" type="button" id="cancelSaleItemEditButton" hidden>Cancel Edit</button>
                     <button class="button ghost" type="button" id="openProductionOrderButton">Production Order သွားမယ်</button>
                   </div>
                 </div>
@@ -392,6 +837,7 @@
                         <th>Description</th>
                         <th>Quantity</th>
                         <th>Amount</th>
+                        <th>COGS</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -400,11 +846,13 @@
                       <tr>
                         <td colspan="4">Total</td>
                         <td id="saleTableTotal">0 MMK</td>
+                        <td id="saleCostTotal">0 MMK</td>
                         <td></td>
                       </tr>
                       <tr>
                         <td colspan="4">Balance</td>
                         <td id="saleBalancePreview">0 MMK</td>
+                        <td></td>
                         <td></td>
                       </tr>
                     </tfoot>
@@ -431,9 +879,14 @@
                     <strong id="cashierBalanceAfter">0 MMK</strong>
                   </div>
                 </div>
-                <div class="form-grid payment-after-table">
+                <section class="cashier-field-group cashier-field-group--primary cashier-payment-entry">
+                  <div class="cashier-group-heading">
+                    <strong>Payment လက်ခံရန်</strong>
+                    <span>ငွေလက်ခံသည့်နည်းလမ်း၊ ပမာဏနဲ့ရက်စွဲ</span>
+                  </div>
+                <div class="form-grid payment-after-table cashier-field-grid cashier-field-grid--three">
                   <label>
-                    Payment Type
+                    <span class="cashier-label">Payment Type <b>နည်းလမ်း</b></span>
                     <select name="paymentType" form="saleForm" required>
                       <option>Cash</option>
                       <option>KBZPay</option>
@@ -442,27 +895,36 @@
                       <option>Bank Transfer</option>
                     </select>
                   </label>
-                  <label>
-                    Received Amount
+                  <label class="cashier-money-field cashier-money-field--received">
+                    <span class="cashier-label">Received Amount <b>အဓိကထည့်ရန်</b></span>
                 <input name="receivedAmount" form="saleForm" type="number" min="0" step="1" placeholder="ငွေရမှထည့်ပါ / မရသေးရင် blank" />
                   </label>
                   <label>
-                    Payment Date
+                    <span class="cashier-label">Payment Date <b>ရက်စွဲ</b></span>
                     <input name="paymentDate" form="saleForm" type="date" required />
                   </label>
                 </div>
+                </section>
                 <div class="payment-line-actions">
-                  <button class="button secondary" type="button" id="addSalePaymentLineButton">+ Payment Line ထပ်ထည့်မယ်</button>
+                  <button class="button secondary" type="button" id="addSalePaymentLineButton"><i data-lucide="plus" aria-hidden="true"></i> Payment Line ထပ်ထည့်မယ်</button>
                   <span>Cash + KBZPay လို payment ၂ မျိုးပေးရင် တစ်ကြောင်းချင်းထည့်ပါ</span>
                 </div>
                 <div class="payment-line-list" id="salePaymentLineList"></div>
-                <div class="form-actions voucher-actions">
-                  <button class="button primary" type="button" id="saveSaleButton">✓ Voucher သိမ်းမယ်</button>
+                <details class="cashier-more-options cashier-note-options">
+                  <summary>Note ထည့်ရန် <span>Optional</span></summary>
+                  <label class="sale-note">
+                    Customer Note
+                    <textarea name="note" rows="2" form="saleForm" placeholder="Customer note / discount / delivery"></textarea>
+                  </label>
+                </details>
+              </div>
+
+              <div class="form-actions sale-bottom-actions">
+                <div class="sale-step-nav" aria-label="Voucher step navigation">
+                  <button class="button ghost" type="button" id="saleStepBackButton">Back</button>
+                  <button class="button secondary" type="button" id="saleStepNextButton">Next</button>
                 </div>
-                <label class="sale-note">
-                  Note
-                  <textarea name="note" rows="2" form="saleForm" placeholder="Customer note / discount / delivery"></textarea>
-                </label>
+                <button class="button primary" type="button" id="saveSaleButton"><i data-lucide="check" aria-hidden="true"></i> Voucher သိမ်းမယ်</button>
               </div>
             </div>
           </div>
@@ -470,46 +932,9 @@
         </section>
 
         <section class="panel protected view-section" id="production" data-view="production" data-permission="production">
-          <article class="production-compose" data-dashboard-permission="sale">
-            <div class="panel-subhead">
-              <h3>Production Order တင်ရန်</h3>
-              <span class="status-pill" id="productionComposeStatus">Ready</span>
-            </div>
-            <div class="form-grid compact-form">
-              <label>
-                Voucher Number
-                <input id="productionOrderVoucher" placeholder="V-1023" />
-              </label>
-              <label>
-                Urgency
-                <select id="productionOrderUrgency">
-                  <option value="normal">Normal</option>
-                  <option value="urgent">Urgent</option>
-                </select>
-              </label>
-              <label>
-                Pickup / Delivery Date
-                <input id="productionOrderDate" type="date" />
-              </label>
-              <label>
-                Photo
-                <input id="productionOrderPhotos" type="file" accept="image/*" multiple />
-              </label>
-              <label class="wide">
-                Customer Requirement
-                <textarea id="productionOrderRequirement" rows="3" placeholder="ပန်းအရောင်၊ design, customer မှာထားတာ၊ photo reference အကြောင်း"></textarea>
-              </label>
-              <div class="photo-preview-list wide" id="productionOrderPhotoPreview"></div>
-              <div class="form-actions wide">
-                <button class="button secondary" type="button" id="sendProductionOrderButton">Order တင်မယ်</button>
-                <button class="button ghost" type="button" id="cancelProductionEditButton" hidden>Cancel Edit</button>
-              </div>
-            </div>
-          </article>
-
           <div class="panel-heading table-heading">
             <div>
-              <p class="eyebrow">Production Team</p>
+              <p class="eyebrow">Order Team</p>
               <h2>Production Order Inbox</h2>
             </div>
             <div class="table-tools">
@@ -536,6 +961,7 @@
                   <th>Date</th>
                   <th>Voucher</th>
                   <th>Items / Requirement</th>
+                  <th>Urgency</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -543,6 +969,130 @@
               <tbody id="productionOrderTable"></tbody>
             </table>
           </div>
+        </section>
+
+        <section class="protected view-section cash-float-view" id="cashfloat" data-view="cashfloat" data-permission="cashfloat">
+          <div class="panel cash-float-header">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Production Cash Control</p>
+                <h2>Cash Float</h2>
+                <p class="cash-float-description">Production common cash ထဲက ပေးထားငွေ၊ ပန်းစည်းထဲသုံးထားငွေနှင့် လက်ကျန်ကို code အလိုက်စစ်ရန်</p>
+              </div>
+              <span class="status-pill" id="cashFloatStatus">စာရင်းကိုက်ညီသည်</span>
+            </div>
+
+            <div class="cash-float-summary" aria-label="Cash float summary">
+              <article>
+                <span>Admin ပေးထားငွေ</span>
+                <strong id="cashFloatAllocated">0 MMK</strong>
+              </article>
+              <article class="available">
+                <span>Production Cash လက်ကျန်</span>
+                <strong id="cashFloatAvailable">0 MMK</strong>
+              </article>
+              <article>
+                <span>စုစုပေါင်းသုံးထားငွေ</span>
+                <strong id="cashFloatUsed">0 MMK</strong>
+              </article>
+              <article>
+                <span>စတင်ရက်မတိုင်ခင် မရောင်းရသေး</span>
+                <strong id="cashFloatOpeningUnsold">0 MMK</strong>
+              </article>
+              <article>
+                <span>စတင်ရက်နောက်ပိုင်း မရောင်းရသေး</span>
+                <strong id="cashFloatUnsold">0 MMK</strong>
+              </article>
+              <article>
+                <span>ရောင်းပြီးပန်းစည်းငွေ</span>
+                <strong id="cashFloatSold">0 MMK</strong>
+              </article>
+            </div>
+            <div class="cash-float-equation" id="cashFloatEquation">ပေးထားငွေ = လက်ကျန်ငွေ + မရောင်းရသေး + ရောင်းပြီး</div>
+          </div>
+
+          <article class="panel" id="cashFloatAdminPanel">
+            <div class="panel-subhead">
+              <div>
+                <p class="eyebrow">Admin Only</p>
+                <h3>Production Cash Float ထည့်ရန်</h3>
+              </div>
+            </div>
+            <form class="form-grid compact-form" id="cashFloatForm" autocomplete="off">
+              <label>
+                <span class="label-title">ထည့်သည့်ရက် <span class="req">*</span></span>
+                <input name="allocationDate" type="date" min="2026-09-16" required />
+              </label>
+              <label>
+                <span class="label-title">ထုတ်သည့် Account</span>
+                <select name="source">
+                  <option value="business">Business Cash</option>
+                  <option value="personal">Personal Cash</option>
+                </select>
+              </label>
+              <label>
+                <span class="label-title">ငွေပမာဏ <span class="req">*</span></span>
+                <input name="amount" type="number" min="1" step="1" placeholder="5000000" required />
+              </label>
+              <label class="wide">
+                <span class="label-title">မှတ်ချက်</span>
+                <input name="note" placeholder="ဥပမာ - ပထမအကြိမ် common float" />
+              </label>
+              <div class="form-actions wide">
+                <button class="button primary" type="submit"><i data-lucide="plus" aria-hidden="true"></i> Cash Float ထည့်မယ်</button>
+              </div>
+            </form>
+
+            <div class="panel-subhead cash-float-opening-heading">
+              <div>
+                <p class="eyebrow">Opening Stock</p>
+                <h3>စတင်ရက်မတိုင်ခင် မရောင်းရသေးပန်းစည်းငွေ</h3>
+              </div>
+            </div>
+            <form class="form-grid compact-form" id="cashFloatOpeningForm" autocomplete="off">
+              <label>
+                <span class="label-title">စတင်သတ်မှတ်ရက်</span>
+                <input name="effectiveDate" type="date" value="2026-09-16" readonly />
+              </label>
+              <label>
+                <span class="label-title">အရင် Stock ထဲရှိငွေ</span>
+                <input name="amount" type="number" min="0" step="1" placeholder="နောက်မှသတ်မှတ်ရန်" />
+              </label>
+              <label class="wide">
+                <span class="label-title">မှတ်ချက်</span>
+                <input name="note" placeholder="ဥပမာ - စတင်ရက်မတိုင်ခင် opening unsold bouquet စာရင်း" />
+              </label>
+              <div class="form-actions wide">
+                <button class="button secondary" type="submit">Opening Unsold Money သတ်မှတ်မယ်</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading table-heading">
+              <div>
+                <p class="eyebrow">Code Ledger</p>
+                <h3>Cash Float အဝင် / ပန်းစည်းအသုံးစာရင်း</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="compact-record-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>စာရင်းသွင်းသူ</th>
+                    <th>Reference</th>
+                    <th>အကြောင်းအရာ</th>
+                    <th>အဝင်</th>
+                    <th>ပန်းစည်းသုံးငွေ</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cashFloatLedger"></tbody>
+              </table>
+            </div>
+          </article>
         </section>
 
         <section class="panel protected view-section" id="vouchers" data-view="vouchers" data-permission="sale">
@@ -554,6 +1104,24 @@
             <div class="table-tools">
               <input id="voucherHistorySearch" placeholder="Search voucher, description, staff" />
               <input id="voucherHistoryDate" type="date" />
+              <select id="voucherHistoryPaymentType" aria-label="Voucher payment method filter">
+                <option value="all">All Payment</option>
+                <option>Cash</option>
+                <option>KBZPay</option>
+                <option>WavePay</option>
+                <option>AYA Pay</option>
+                <option>Bank Transfer</option>
+              </select>
+              <select id="voucherHistorySort" aria-label="Voucher sort order">
+                <option value="date-desc">Date: Newest First</option>
+                <option value="date-asc">Date: Oldest First</option>
+                <option value="voucher-asc">Voucher No: A-Z</option>
+                <option value="voucher-desc">Voucher No: Z-A</option>
+                <option value="total-desc">Total: High-Low</option>
+                <option value="total-asc">Total: Low-High</option>
+                <option value="balance-desc">Balance: High-Low</option>
+                <option value="balance-asc">Balance: Low-High</option>
+              </select>
             </div>
           </div>
 
@@ -598,17 +1166,17 @@
                     <option value="pending">မပေးရသေး</option>
                   </select>
                 </label>
-                <button class="button primary full-width" type="button" id="addVoucherPaymentButton">+ Payment ထပ်သွင်းမယ်</button>
+                <button class="button primary full-width" type="button" id="addVoucherPaymentButton"><i data-lucide="plus" aria-hidden="true"></i> ကျန်ငွေပေး ထည့်မယ်</button>
               </div>
             </article>
 
             <div class="table-wrap">
-              <table class="compact-record-table">
+              <table class="compact-record-table voucher-history-table">
                 <thead>
                   <tr>
                     <th>Voucher No.</th>
                     <th>Date</th>
-                    <th>Description</th>
+                    <th>Items</th>
                     <th>Paid / Balance</th>
                     <th>Action</th>
                   </tr>
@@ -619,11 +1187,145 @@
           </div>
         </section>
 
-        <section class="panel protected view-section" id="fulfillment" data-view="fulfillment" data-permission="sale">
+        <section class="panel protected view-section workflow-panel receivables-workflow" id="receivables" data-view="receivables" data-permission="receivables">
+          <div class="panel-heading table-heading">
+            <div>
+              <p class="eyebrow">Payment Follow-up</p>
+              <h2>ကျန်ငွေရရန်စာရင်း</h2>
+              <p class="workflow-hint">Pickup / Delivery ရက်ကို due date အဖြစ်ထားပြီး မရှင်းရသေးသော voucher များ</p>
+            </div>
+            <div class="table-tools receivables-tools">
+              <input id="receivablesSearch" placeholder="Voucher, staff ရှာရန်" />
+              <input id="receivablesDueDate" type="date" aria-label="Receivable due date filter" />
+              <select id="receivablesStatus" aria-label="Receivable due status filter">
+                <option value="all">အားလုံး</option>
+                <option value="overdue">ရက်ကျော်</option>
+                <option value="today">ဒီနေ့ပေးရန်</option>
+                <option value="upcoming">နောက်ရက်များ</option>
+              </select>
+              <select id="receivablesSort" aria-label="Receivable sort order">
+                <option value="due-asc">Due Date: အစောဆုံး</option>
+                <option value="balance-desc">ကျန်ငွေ: အများဆုံး</option>
+                <option value="voucher-asc">Voucher: A-Z</option>
+              </select>
+            </div>
+          </div>
+          <div class="receivables-summary" aria-label="Outstanding payment summary">
+            <article>
+              <span>ကျန်ငွေစုစုပေါင်း</span>
+              <strong id="receivablesTotal">0 MMK</strong>
+            </article>
+            <article>
+              <span>မရှင်းရသေးသော Voucher</span>
+              <strong id="receivablesCount">0</strong>
+            </article>
+            <article>
+              <span>ရက်ကျော် Voucher</span>
+              <strong id="receivablesOverdueCount">0</strong>
+            </article>
+            <article>
+              <span>ဒီနေ့ပေးရန်</span>
+              <strong id="receivablesTodayCount">0</strong>
+            </article>
+          </div>
+          <div class="table-wrap">
+            <table class="compact-record-table">
+              <thead>
+                <tr>
+                  <th>Due Date</th>
+                  <th>Voucher</th>
+                  <th>Total / Paid</th>
+                  <th>ကျန်ငွေ</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="receivablesTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel protected view-section girlfriend-day-workflow" id="girlfriend-day" data-view="girlfriend-day" data-permission="girlfriend-day">
+          <div class="panel-heading table-heading">
+            <div>
+              <p class="eyebrow">August 1 · Special Orders</p>
+              <h2>National Girlfriend Day Orders</h2>
+              <p class="workflow-hint">2026-08-01 တွင် ပေးရမည့် Voucher များကို ပုံမှန် order များနှင့် မရောဘဲ သီးသန့်စီထားပါသည်။</p>
+            </div>
+            <div class="table-tools girlfriend-day-tools">
+              <input id="girlfriendDaySearch" placeholder="Search voucher, staff, description" />
+            </div>
+          </div>
+
+          <div class="girlfriend-day-summary" aria-label="National Girlfriend Day order summary">
+            <article>
+              <span>စုစုပေါင်း Order</span>
+              <strong id="girlfriendDayTotalCount">0</strong>
+            </article>
+            <article class="pending">
+              <span>လုပ်ရန်ကျန် (Code Pending)</span>
+              <strong id="girlfriendDayPendingCount">0</strong>
+            </article>
+            <article class="completed">
+              <span>ပြီးစီး (Code ပြည့်စုံ)</span>
+              <strong id="girlfriendDayCompletedCount">0</strong>
+            </article>
+          </div>
+
+          <div class="girlfriend-order-columns">
+            <article class="girlfriend-order-group pending">
+              <div class="girlfriend-order-group-heading">
+                <div>
+                  <p class="eyebrow">To Do</p>
+                  <h3>Code Pending ရှိသော Order များ</h3>
+                </div>
+                <span class="fulfillment-badge" id="girlfriendDayPendingPill">0 Order</span>
+              </div>
+              <div class="table-wrap">
+                <table class="compact-record-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher</th>
+                      <th>Order Details</th>
+                      <th>Method</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="girlfriendDayPendingTable"></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="girlfriend-order-group completed">
+              <div class="girlfriend-order-group-heading">
+                <div>
+                  <p class="eyebrow">Completed</p>
+                  <h3>Code ပြည့်စုံသော Order များ</h3>
+                </div>
+                <span class="fulfillment-badge delivered" id="girlfriendDayCompletedPill">0 Order</span>
+              </div>
+              <div class="table-wrap">
+                <table class="compact-record-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher</th>
+                      <th>Order Details</th>
+                      <th>Method</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="girlfriendDayCompletedTable"></tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel protected view-section workflow-panel fulfillment-workflow" id="fulfillment" data-view="fulfillment" data-permission="sale">
           <div class="panel-heading table-heading">
             <div>
               <p class="eyebrow">Order Handover</p>
               <h2>Pickup / Delivery Schedule</h2>
+              <p class="workflow-hint">အပြာရောင်စာရင်း · Customer ကို ပစ္စည်းပေးရန်</p>
             </div>
             <div class="table-tools fulfillment-tools">
               <input id="fulfillmentSearch" placeholder="Search voucher, staff, description" />
@@ -657,19 +1359,54 @@
           </div>
         </section>
 
+        <section class="panel protected view-section workflow-panel codecheck-workflow" id="codecheck" data-view="codecheck" data-permission="codecheck">
+          <div class="panel-heading table-heading">
+            <div>
+              <p class="eyebrow">Voucher Follow-up</p>
+              <h2>Code Check</h2>
+            </div>
+            <div class="table-tools fulfillment-tools">
+              <input id="codeCheckSearch" placeholder="Search voucher, staff, description" />
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="compact-record-table">
+              <thead>
+                <tr>
+                  <th>Voucher</th>
+                  <th>Item</th>
+                  <th>Due</th>
+                  <th>Code Link</th>
+                </tr>
+              </thead>
+              <tbody id="codeCheckTable"></tbody>
+            </table>
+          </div>
+        </section>
+
         <section class="panel protected view-section" id="expense" data-view="expense" data-permission="expense">
           <div class="panel-heading">
             <div>
               <p class="eyebrow">Daily Expense Tab</p>
               <h2>တစ်ခုချင်း အထွက်စာရင်း</h2>
             </div>
-            <label class="inline-date">
-              Date
-              <input name="expenseDate" type="date" form="expenseForm" required />
-            </label>
+            <div class="expense-heading-controls">
+              <label class="inline-date">
+                Date
+                <input name="expenseDate" type="date" form="expenseForm" required />
+              </label>
+              <label class="inline-date">
+                Category Filter
+                <select id="expenseCategoryFilter" aria-label="Filter daily expenses by category"></select>
+              </label>
+            </div>
           </div>
 
           <form class="form-grid compact-form" id="expenseForm" autocomplete="off">
+            <label>
+              Category
+              <select name="category" required></select>
+            </label>
             <label class="wide">
               Description
               <input name="description" placeholder="ဘာအတွက်သုံးလိုက်လဲ" required />
@@ -678,16 +1415,39 @@
               Amount
               <input name="amount" type="number" min="0" step="1" placeholder="20000" required />
             </label>
+            <label>
+              Payment Method
+              <select name="paidBy" required>
+                <option>Cash</option>
+                <option>KBZPay</option>
+                <option>WavePay</option>
+                <option>AYA Pay</option>
+                <option>Bank Transfer</option>
+              </select>
+            </label>
             <div class="form-actions wide">
-              <button class="button primary" type="submit">+ Expense ထည့်မယ်</button>
+              <button class="button primary" type="submit"><i data-lucide="plus" aria-hidden="true"></i> Expense ထည့်မယ်</button>
             </div>
           </form>
           <div class="table-wrap expense-table-wrap">
             <table class="compact-record-table">
               <thead>
                 <tr>
+                  <th>Payment Method</th>
+                  <th>Outgoing Total</th>
+                </tr>
+              </thead>
+              <tbody id="expensePaymentSummary"></tbody>
+            </table>
+          </div>
+          <div class="table-wrap expense-table-wrap">
+            <table class="compact-record-table">
+              <thead>
+                <tr>
                   <th>No.</th>
+                  <th>Category</th>
                   <th>Description</th>
+                  <th>Payment Method</th>
                   <th>Amount</th>
                   <th>Action</th>
                 </tr>
@@ -695,12 +1455,214 @@
               <tbody id="expenseTable"></tbody>
               <tfoot>
                 <tr>
-                  <td colspan="2">Daily Total</td>
+                  <td colspan="4" id="expenseTableTotalLabel">Daily Total</td>
                   <td id="expenseTableTotal">0 MMK</td>
                   <td></td>
                 </tr>
               </tfoot>
             </table>
+          </div>
+        </section>
+
+        <section class="panel protected view-section finance-workspace" id="finance" data-view="finance" data-permission="finance">
+          <div class="panel-heading finance-heading">
+            <div>
+              <p class="eyebrow">Business Finance</p>
+              <h2>Finance Dashboard</h2>
+              <p class="workflow-hint">ရောင်းရငွေ၊ ကုန်ကျစရိတ်၊ လက်ခံငွေနဲ့ account လက်ကျန်ကို တစ်နေရာတည်းမှာကြည့်ရန်</p>
+            </div>
+            <label class="inline-date finance-period-control" data-content-permission="finance-full">
+              Report Month
+              <input id="financeMonth" type="month" />
+            </label>
+          </div>
+
+          <div class="finance-metric-grid" aria-label="Financial overview">
+            <article class="finance-metric finance-metric--balance" data-content-permission="finance-full">
+              <span>Accounts Total</span>
+              <strong id="financeAccountsTotal">0 MMK</strong>
+              <small>Starting balance + received − outgoing</small>
+            </article>
+            <article class="finance-metric" data-content-permission="finance-full">
+              <span>Monthly Revenue</span>
+              <strong id="financeRevenue">0 MMK</strong>
+              <small>Voucher total</small>
+            </article>
+            <article class="finance-metric" data-content-permission="profit">
+              <span>Gross Profit</span>
+              <strong id="financeGrossProfit">0 MMK</strong>
+              <small>Revenue − sold item cost</small>
+            </article>
+            <article class="finance-metric finance-metric--profit" data-content-permission="profit">
+              <span>Net Profit</span>
+              <strong id="financeNetProfit">0 MMK</strong>
+              <small>Gross profit − expenses</small>
+            </article>
+            <article class="finance-metric">
+              <span>Receivable</span>
+              <strong id="financeReceivable">0 MMK</strong>
+              <small>Customer ဆီက ရရန်ကျန်</small>
+            </article>
+            <article class="finance-metric finance-metric--payable">
+              <span>Payable</span>
+              <strong id="financePayable">0 MMK</strong>
+              <small>ပစ္စည်းမပေးရသေးသော Voucher Cost</small>
+            </article>
+            <article class="finance-metric finance-metric--position" data-content-permission="finance-full">
+              <span>Net Position</span>
+              <strong id="financeNetPosition">0 MMK</strong>
+              <small>Receivable − Payable</small>
+            </article>
+            <article class="finance-metric">
+              <span>Inventory Value</span>
+              <strong id="financeInventoryValue">0 MMK</strong>
+              <small>လက်ရှိ available stock cost</small>
+            </article>
+          </div>
+
+          <div class="finance-accountant-details" data-content-permission="finance-details">
+            <article class="finance-card">
+              <div class="finance-card-heading">
+                <div>
+                  <p class="eyebrow">Customer Balances</p>
+                  <h3>Receivable Vouchers</h3>
+                </div>
+              </div>
+              <div class="table-wrap finance-detail-table-wrap">
+                <table class="compact-record-table finance-detail-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher</th>
+                      <th>Customer</th>
+                      <th>Due Date</th>
+                      <th>Voucher Total</th>
+                      <th>Paid</th>
+                      <th>Receivable</th>
+                    </tr>
+                  </thead>
+                  <tbody id="financeAccountantReceivableRows"></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="finance-card">
+              <div class="finance-card-heading">
+                <div>
+                  <p class="eyebrow">Pending Voucher Costs</p>
+                  <h3>Payable Vouchers</h3>
+                </div>
+              </div>
+              <div class="table-wrap finance-detail-table-wrap">
+                <table class="compact-record-table finance-detail-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher</th>
+                      <th>Customer</th>
+                      <th>Fulfillment Date</th>
+                      <th>Voucher Total</th>
+                      <th>Payable</th>
+                    </tr>
+                  </thead>
+                  <tbody id="financeAccountantPayableRows"></tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+
+          <div class="finance-columns" data-content-permission="finance-full">
+            <article class="finance-card payable-card">
+              <div class="finance-card-heading">
+                <div>
+                  <p class="eyebrow">Pending Voucher Costs</p>
+                  <h3>Payables · ပစ္စည်းပေးရန်ကျန်</h3>
+                  <p class="workflow-hint">Customer ကို ပစ္စည်းမပေးရသေးသော Voucher များ၏ Cost စုစုပေါင်း</p>
+                </div>
+                <span class="status-pill" id="financePayableStatus">0 open</span>
+              </div>
+
+              <div class="table-wrap payable-table-wrap">
+                <table class="compact-record-table payable-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher</th>
+                      <th>ပစ္စည်းပေးရမည့်ရက်</th>
+                      <th>Voucher Total</th>
+                      <th>Voucher COGS</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="financePayableRows"></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="finance-card">
+              <div class="finance-card-heading">
+                <div>
+                  <p class="eyebrow">Liquidity</p>
+                  <h3>Account Balances</h3>
+                </div>
+                <span class="status-pill">Live from records</span>
+              </div>
+              <div class="table-wrap finance-account-table-wrap">
+                <table class="compact-record-table finance-account-table">
+                  <thead>
+                    <tr>
+                      <th>Account</th>
+                      <th>Starting</th>
+                      <th>Received</th>
+                      <th>Outgoing</th>
+                      <th>Current Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="financeAccountRows"></tbody>
+                </table>
+              </div>
+              <form class="form-grid compact-form finance-opening-form" id="financeOpeningForm" autocomplete="off">
+                <label>
+                  Account
+                  <select name="account" id="financeOpeningAccount" required></select>
+                </label>
+                <label>
+                  Starting Date
+                  <input name="openingDate" type="date" />
+                </label>
+                <label>
+                  Starting Balance
+                  <input name="openingBalance" type="number" step="1" placeholder="0" required />
+                </label>
+                <div class="form-actions">
+                  <button class="button secondary" type="submit">Starting Balance သိမ်းမယ်</button>
+                </div>
+              </form>
+              <p class="finance-note">Starting Date မထည့်ထားလျှင် ရှိသမျှ payment/expense records အားလုံးကို စတင်တွက်ပါမယ်။</p>
+            </article>
+
+            <article class="finance-card pnl-card" data-content-permission="profit">
+              <div class="finance-card-heading">
+                <div>
+                  <p class="eyebrow">Income Statement</p>
+                  <h3>Profit &amp; Loss</h3>
+                </div>
+                <span class="status-pill" id="financePnlPeriod">This month</span>
+              </div>
+              <div class="pnl-statement">
+                <div><span>Sales Revenue</span><strong id="pnlRevenue">0 MMK</strong></div>
+                <div class="pnl-deduction"><span>Less: Cost of Goods Sold</span><strong id="pnlCogs">0 MMK</strong></div>
+                <div class="pnl-subtotal"><span>Gross Profit</span><strong id="pnlGrossProfit">0 MMK</strong></div>
+                <div class="pnl-deduction"><span>Less: Operating Expense</span><strong id="pnlExpense">0 MMK</strong></div>
+                <div class="pnl-total"><span>Net Profit</span><strong id="pnlNetProfit">0 MMK</strong></div>
+              </div>
+              <div class="finance-cash-note">
+                <span>ဒီလ တကယ်လက်ခံငွေ</span>
+                <strong id="financeCashReceived">0 MMK</strong>
+                <small>Revenue နဲ့ cash received မတူပါက receivable/payment date ကြောင့်ဖြစ်နိုင်ပါတယ်။</small>
+              </div>
+              <div class="finance-expense-breakdown">
+                <h3>Expense Breakdown</h3>
+                <div class="mini-table" id="financeExpenseBreakdown"></div>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -715,6 +1677,7 @@
               <button class="segmented" type="button" data-report-mode="month">1 လ</button>
               <input id="summaryDate" type="date" />
               <input id="summaryMonth" type="month" hidden />
+              <button class="button primary" type="button" id="reportExportButton">Excel Export</button>
             </div>
           </div>
 
@@ -723,19 +1686,34 @@
               <span>Cash Received</span>
               <strong id="summarySale">0 MMK</strong>
             </article>
-            <article>
-              <span>Sold Item Cost</span>
+            <article class="clickable-summary" id="summaryCostCard" role="button" tabindex="0" aria-label="Show sold item cost details">
+              <span>Cost of Goods Sold</span>
               <strong id="summaryCost">0 MMK</strong>
             </article>
             <article>
               <span>Expense</span>
               <strong id="summaryExpense">0 MMK</strong>
             </article>
-            <article>
+            <article data-report-sensitive>
               <span>Net Cash</span>
               <strong id="summaryProfit">0 MMK</strong>
             </article>
           </div>
+
+          <details class="daily-transfer-panel" id="dailyTransferPanel" hidden>
+            <summary class="daily-transfer-summary">
+              <span><b>Daily Transfer → Cash Management</b><small>Admin Reconciliation · နှိပ်ပြီး Show / Hide လုပ်ရန်</small></span>
+              <span class="status-pill" id="dailyTransferStatus">စစ်ဆေးရန်</span>
+            </summary>
+            <div class="daily-transfer-body">
+              <p class="daily-transfer-help">Received မှ Expense ကိုအရင်နုတ်ပြီး Adjustment ကိုပေါင်းမည်။ အမည်မသိအဝင်ကို <b>+</b>၊ လျော့ငွေကို <b>−</b> ဖြင့်ထည့်ပါ။</p>
+              <div class="daily-transfer-preview" id="dailyTransferPreview"></div>
+              <div class="daily-transfer-actions">
+                <small>AYA Banking ကို AYA Pay မှ သီးခြားလွှဲသည့်အတွက် ဒီ Auto Transfer ထဲမပါပါ။</small>
+                <button class="button primary" type="button" id="dailyTransferButton">Daily Transfer လုပ်မယ်</button>
+              </div>
+            </div>
+          </details>
 
           <div class="report-insight-grid" id="reportInsightGrid" aria-label="Business reports" hidden></div>
 
@@ -744,6 +1722,12 @@
               <h3>Payment Type အလိုက်</h3>
               <div class="mini-table" id="paymentSummary"></div>
               <div class="mini-table payment-detail-list" id="paymentDetailList"></div>
+            </div>
+            <div>
+              <h3>Expense Category</h3>
+              <div class="mini-table" id="reportExpenseCategorySummary"></div>
+              <h3>Payment Method Outgoing</h3>
+              <div class="mini-table" id="reportExpensePaymentSummary"></div>
             </div>
             <div hidden>
               <h3>ဝန်ထမ်း Performance</h3>
@@ -776,14 +1760,15 @@
                   <select name="role" required>
                     <option value="admin">Admin - all access</option>
                     <option value="production">Production - stock / sticker</option>
-                    <option value="cashier">Cashier - sale / voucher</option>
-                    <option value="cashier_expense">Cashier + Expense</option>
+                    <option value="cashier">Sale Team - sale / stock</option>
+                    <option value="cashier_expense">Sale Team + Expense</option>
                     <option value="expense">Expense - expense only</option>
+                    <option value="accountant">Accountant - Finance + Sale</option>
                     <option value="manager">Manager - inventory / report</option>
                   </select>
                 </label>
                 <div class="form-actions wide">
-                  <button class="button secondary" type="submit">+ Staff ထည့်မယ်</button>
+                  <button class="button secondary" type="submit"><i data-lucide="user-plus" aria-hidden="true"></i> Staff ထည့်မယ်</button>
                 </div>
               </form>
               <div class="mini-table" id="staffList"></div>
@@ -797,7 +1782,7 @@
                   <input name="name" placeholder="Sale person name" required />
                 </label>
                 <div class="form-actions wide">
-                  <button class="button secondary" type="submit">+ Sale Person ထည့်မယ်</button>
+                  <button class="button secondary" type="submit"><i data-lucide="user-plus" aria-hidden="true"></i> Sale Person ထည့်မယ်</button>
                 </div>
               </form>
               <div class="mini-table" id="salePersonList"></div>
@@ -819,10 +1804,24 @@
                   <input name="subCategory" placeholder="New sub category" />
                 </label>
                 <div class="form-actions wide">
-                  <button class="button secondary" type="submit">+ Category ထည့်မယ်</button>
+                  <button class="button secondary" type="submit"><i data-lucide="plus" aria-hidden="true"></i> Category ထည့်မယ်</button>
                 </div>
               </form>
               <div class="mini-table" id="categoryList"></div>
+            </article>
+
+            <article>
+              <h3>Expense Category</h3>
+              <form class="form-grid compact-form" id="expenseCategoryForm" autocomplete="off">
+                <label>
+                  Category Name
+                  <input name="name" placeholder="ဥပမာ - Delivery / Transport" required />
+                </label>
+                <div class="form-actions wide">
+                  <button class="button secondary" type="submit"><i data-lucide="plus" aria-hidden="true"></i> Expense Category ထည့်မယ်</button>
+                </div>
+              </form>
+              <div class="mini-table" id="expenseCategoryList"></div>
             </article>
 
             <article>
@@ -858,6 +1857,13 @@
                     <option value="light">Light border</option>
                   </select>
                 </label>
+                <label>
+                  Printer Resolution
+                  <select id="settingStickerDpi">
+                    <option value="203">203 DPI — XPrinter XP-365B</option>
+                    <option value="300">300 DPI</option>
+                  </select>
+                </label>
               </div>
             </article>
           </div>
@@ -867,7 +1873,8 @@
           <div class="panel-heading table-heading">
             <div>
               <p class="eyebrow">Inventory</p>
-              <h2>Stock / Sale Record</h2>
+              <h2 id="inventoryTitle">Shop Inventory</h2>
+              <a class="button secondary" href="#stock-audit">Stock စာရင်းစစ်</a>
             </div>
             <div class="table-tools">
               <input id="inventorySearch" placeholder="Search code, voucher, SKU, description, category" />
@@ -877,6 +1884,11 @@
                 <option value="all">All Type</option>
                 <option value="floral">Floral</option>
                 <option value="sku">SKU Purchase</option>
+              </select>
+              <select id="inventoryLocationFilter" aria-label="Inventory location filter" hidden>
+                <option value="all">နေရာအားလုံး</option>
+                <option value="shop">ဆိုင်အရောင်း Inventory</option>
+                <option value="pending">ဆိုင်ထဲမရောက်သေး</option>
               </select>
               <select id="inventoryFilter" aria-label="Inventory status filter">
                 <option value="all">All</option>
@@ -889,17 +1901,19 @@
             <table>
               <thead>
                 <tr>
+                  <th>Photo</th>
                   <th>Code</th>
                   <th>Type</th>
-                  <th>Date</th>
+                  <th>Production Date / Time</th>
                   <th>Description</th>
                   <th>Category</th>
                   <th>Qty</th>
-                  <th>Cost</th>
+                  <th>Bouquet Cash Cost</th>
                   <th>Sale Price</th>
                   <th>Florist</th>
                   <th>Sold By</th>
                   <th>Voucher</th>
+                  <th>Inventory နေရာ</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -907,8 +1921,47 @@
               <tbody id="inventoryTable"></tbody>
             </table>
           </div>
+          <div class="table-tools" aria-label="Inventory pages">
+            <button class="button secondary" id="inventoryPreviousPage" type="button">Previous</button>
+            <span id="inventoryPageInfo" role="status" aria-live="polite"></span>
+            <button class="button secondary" id="inventoryNextPage" type="button">Next</button>
+          </div>
         </section>
 
+        <section class="panel protected view-section" data-view="stock-audit" data-permission="inventory" id="stock-audit">
+          <div class="panel-heading"><div><p class="eyebrow">Barcode stock check</p><h2>Stock စာရင်းစစ်</h2><p id="auditSchedule"></p></div><a href="#shop-inventory" class="button secondary">Inventory</a></div>
+          <div class="audit-guide" aria-label="Stock စာရင်းစစ် အဆင့်များ">
+            <span><b>၁</b> နေရာရွေး</span><span><b>၂</b> စစ်မည်နှိပ်</span><span><b>၃</b> Barcode Scan</span><span><b>၄</b> မစစ်ရသေး ၀ ဖြစ်မှ အပြီးသတ်</span>
+          </div>
+          <div class="table-tools audit-session-tools">
+            <label>စစ်သည့်မှတ်တမ်း <select id="auditSession"></select></label>
+            <button type="button" class="button secondary" id="auditEdit" hidden disabled>မှတ်တမ်း ပြင်မည်</button>
+            <button type="button" class="button secondary" id="auditDelete" hidden disabled>မှတ်တမ်း ဖျက်မည်</button>
+            <button type="button" class="button secondary" id="auditRefresh">စာရင်း / ပြင်ခွင့် Refresh</button>
+            <button type="button" class="button secondary" id="auditSplitPending" hidden disabled>မရောက်သေးစာရင်း ခွဲမည်</button>
+            <label>စစ်မည့်နေရာ <select id="auditLocation"><option value="shop">ဆိုင်အရောင်း Inventory</option><option value="pending">ဆိုင်ထဲမရောက်သေး</option></select></label>
+            <button type="button" class="button" id="auditStart">စစ်ဆေးမှု စမည်</button>
+            <button type="button" class="button secondary" id="auditFinish">စစ်ဆေးမှု အပြီးသတ်မည်</button>
+            <button type="button" class="button secondary" id="auditPdf" disabled>PDF Report ထုတ်မယ်</button>
+          </div>
+          <form id="auditScanForm" class="audit-scan-box" autocomplete="off">
+            <label for="auditBarcode"><strong>Barcode Scan ဖတ်ရန်</strong><small>Scanner ဖြင့်ဖတ်ပါ၊ သို့မဟုတ် Product Code ရိုက်ပါ</small></label><input id="auditBarcode" placeholder="Barcode / Product Code" autocomplete="off" spellcheck="false" />
+            <label id="auditQtyField" hidden>စစ်တွေ့ Qty <input id="auditQty" type="number" min="0" step="1" placeholder="Qty" /></label>
+            <button class="button" type="submit" id="auditScanButton">Scan မှတ်မည်</button>
+          </form>
+          <p id="auditFeedback" class="audit-feedback" role="status" aria-live="polite"></p>
+          <div class="audit-overview" aria-label="စစ်ဆေးမှု အခြေအနေ">
+            <button type="button" class="audit-stat is-active" data-audit-filter="pending"><span>မစစ်ရသေး</span><strong id="auditPendingCount">0</strong><small>အရင်စစ်ရန်</small></button>
+            <button type="button" class="audit-stat audit-stat-success" data-audit-filter="checked"><span>Scan ပြီး</span><strong id="auditCheckedCount">0</strong><small>မှတ်တမ်းဝင်ပြီး</small></button>
+            <button type="button" class="audit-stat audit-stat-warning" data-audit-filter="exceptions"><span>ပြန်စစ်ရန်</span><strong id="auditExceptionCount">0</strong><small>မကိုက်ညီသော Scan</small></button>
+            <button type="button" class="audit-stat" data-audit-filter="all"><span>စုစုပေါင်း</span><strong id="auditTotalCount">0</strong><small>စစ်ရမည့် Code</small></button>
+          </div>
+          <div class="audit-progress" aria-label="Stock scan progress"><div id="auditProgressBar"></div></div>
+          <p id="auditTotals" class="audit-totals"></p>
+          <div id="auditExceptions" class="audit-exceptions" role="status"></div>
+          <div class="table-tools audit-list-tools"><label class="audit-filter-select">ပြသရန် <select id="auditFilter"><option value="pending">မစစ်ရသေး</option><option value="checked">Scan ပြီး</option><option value="exceptions">ပြန်စစ်ရန်</option><option value="all">အားလုံး</option></select></label><label>အစဉ်စီရန် <select id="auditSort"><option value="time-desc">Scan နောက်ဆုံးအရင်</option><option value="time-asc">Scan အဟောင်းအရင်</option><option value="code-asc">Code ငယ် → ကြီး</option><option value="code-desc">Code ကြီး → ငယ်</option><option value="name-asc">အမည် A → Z</option><option value="name-desc">အမည် Z → A</option><option value="qty-asc">စစ်တွေ့ Qty နည်း → များ</option><option value="qty-desc">စစ်တွေ့ Qty များ → နည်း</option></select></label><input id="auditSearch" aria-label="Search audit codes" placeholder="Code / ပစ္စည်းအမည် ရှာရန်" /></div>
+          <div class="table-wrap audit-table"><table><thead><tr><th>Code</th><th>ပစ္စည်းအမည်</th><th>စတင်ချိန် Qty</th><th>စစ်ဆေးမှု</th><th>စစ်ချိန် / ဝန်ထမ်း</th><th>လက်ရှိအခြေအနေ</th></tr></thead><tbody id="auditRows"></tbody></table></div>
+        </section>
       </main>
     </div>
 
@@ -921,7 +1974,7 @@
             <p class="eyebrow">Inventory</p>
             <h2 id="stockEditTitle">Stock Edit</h2>
           </div>
-          <button class="icon-button" type="button" data-close-modal="stockEditModal" aria-label="Close">x</button>
+          <button class="icon-button" type="button" data-close-modal="stockEditModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
         </div>
         <form class="form-grid compact-form" id="stockEditForm" autocomplete="off">
           <label>
@@ -931,6 +1984,13 @@
           <label>
             <span class="label-title">Production Date <span class="req">*</span></span>
             <input name="productionDate" type="date" required />
+          </label>
+          <label>
+            <span class="label-title">Inventory နေရာ <span class="req">*</span></span>
+            <select name="inventoryLocation" required>
+              <option value="pending">ဆိုင်ထဲမရောက်သေး</option>
+              <option value="shop">ဆိုင်အရောင်း Inventory</option>
+            </select>
           </label>
           <label class="wide">
             <span class="label-title">Description <span class="req">*</span></span>
@@ -948,9 +2008,10 @@
             <span class="label-title">Paper Color <span class="req">*</span></span>
             <input name="paperColor" required />
           </label>
-          <label>
-            <span class="label-title">Production Cost</span>
-              <input name="productionCost" type="number" min="0" step="1" />
+          <label id="editStockCashValueField" hidden>
+            <span class="label-title">ပန်းစည်းထဲထည့်သည့် ငွေသား <span class="req">*</span></span>
+            <input name="cashValue" type="number" min="1" step="1" />
+            <small id="editStockCashFloatHint"></small>
           </label>
           <label>
             <span class="label-title">Sale Price</span>
@@ -960,6 +2021,20 @@
             <span class="label-title">Florist <span class="req">*</span></span>
             <select name="florist" id="editStockFlorist" required></select>
           </label>
+          <div class="stock-photo-field wide" id="editStockPhotoField">
+            <div class="stock-photo-heading">
+              <div>
+                <span class="label-title">ပန်းစည်းဓာတ်ပုံ</span>
+                <small>လက်ရှိပုံကိုကြည့်နိုင်ပြီး လိုအပ်ရင် ပုံအသစ်နဲ့အစားထိုးနိုင်ပါတယ်။</small>
+              </div>
+              <label class="button secondary stock-photo-picker">
+                <i data-lucide="camera" aria-hidden="true"></i>
+                <span>ပုံရိုက် / အစားထိုး</span>
+                <input id="editStockPhotoInput" type="file" accept="image/*" capture="environment" />
+              </label>
+            </div>
+            <div class="stock-photo-preview" id="editStockPhotoPreview" aria-live="polite"></div>
+          </div>
           <div class="form-actions wide">
             <button class="button primary" type="submit">Stock ပြင်မယ်</button>
           </div>
@@ -974,17 +2049,24 @@
             <p class="eyebrow">Export</p>
             <h2 id="exportTitle">စာရင်းထုတ်ရန်</h2>
           </div>
-          <button class="icon-button" type="button" data-close-modal="exportModal" aria-label="Close">x</button>
+          <button class="icon-button" type="button" data-close-modal="exportModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
         </div>
         <form class="form-grid compact-form" id="exportForm" autocomplete="off">
+          <div class="wide report-presets" aria-label="Report date shortcuts">
+            <button type="button" class="button secondary" data-export-period="today">Today</button>
+            <button type="button" class="button secondary" data-export-period="month">This month</button>
+            <button type="button" class="button secondary" data-export-period="all">All dates</button>
+          </div>
           <label>
             စာရင်းအမျိုးအစား
             <select name="exportType" id="exportType" required>
+              <option value="accounting_sales">Payment Ledger Sheets (Accountant)</option>
               <option value="sales">Sale / Voucher</option>
               <option value="payments">Payment Received</option>
               <option value="stock">Stock</option>
               <option value="inventory_available">Available Inventory</option>
               <option value="expenses">Expense</option>
+              <option value="best_selling_products">အရောင်းရဆုံး ပစ္စည်းများ</option>
               <option value="summary_payments">ငွေစာရင်းချုပ် (Payment Type)</option>
               <option value="summary_profit">အရှုံးအမြတ်စာရင်း</option>
               <option value="summary_staff">ဝန်ထမ်း Performance</option>
@@ -996,6 +2078,7 @@
           <label>
             Format
             <select name="format" required>
+              <option value="excel">Excel Workbook (.xls)</option>
               <option value="csv">Sheet format (CSV)</option>
               <option value="pdf">PDF / Print</option>
             </select>
@@ -1008,6 +2091,12 @@
             End Date
             <input name="endDate" type="date" />
           </label>
+          <label class="wide" id="exportSalePersonWrap">
+            Sale Person
+            <select name="salePerson" id="exportSalePerson">
+              <option value="all">All Sale Persons</option>
+            </select>
+          </label>
           <label class="wide" id="stockExportStatusWrap">
             Stock Status
             <select name="stockStatus">
@@ -1017,8 +2106,10 @@
             </select>
           </label>
           <div class="form-actions wide">
+            <button class="button secondary" type="button" id="previewExport">Preview ကြည့်ရန်</button>
             <button class="button primary" type="submit">Export လုပ်မယ်</button>
           </div>
+          <div class="wide report-preview" id="exportPreview" aria-live="polite" hidden></div>
         </form>
       </section>
     </div>
@@ -1030,7 +2121,7 @@
             <p class="eyebrow">Import</p>
             <h2 id="importTitle">Excel / Note Data ထည့်ရန်</h2>
           </div>
-          <button class="icon-button" type="button" data-close-modal="importModal" aria-label="Close">x</button>
+          <button class="icon-button" type="button" data-close-modal="importModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
         </div>
         <div class="import-grid">
           <div class="side-form">
@@ -1038,6 +2129,7 @@
               Import Type
               <select id="importType">
                 <option value="stock">Stock</option>
+                <option value="sku">SKU Purchase</option>
                 <option value="sales">Sale / Voucher</option>
                 <option value="expenses">Expense</option>
                 <option value="json">Backup JSON</option>
@@ -1075,18 +2167,116 @@
       <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paymentHistoryTitle">
         <div class="modal-heading">
           <div>
-            <p class="eyebrow">Payment Detail</p>
-            <h2 id="paymentHistoryTitle">Voucher Payment History</h2>
+            <p class="eyebrow">Voucher Detail</p>
+            <h2 id="paymentHistoryTitle">Voucher Details</h2>
           </div>
-          <button class="icon-button" type="button" data-close-modal="paymentHistoryModal" aria-label="Close">x</button>
+          <button class="icon-button" type="button" data-close-modal="paymentHistoryModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
         </div>
         <div class="payment-history-body" id="paymentHistoryBody"></div>
       </section>
     </div>
 
+    <div class="modal-backdrop" id="productionCashDailyModal" hidden>
+      <section class="modal-panel wide-modal" role="dialog" aria-modal="true" aria-labelledby="productionCashDailyModalTitle">
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">Daily Production Cash Detail</p>
+            <h2 id="productionCashDailyModalTitle">Production Cash အသုံးစာရင်း</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-modal="productionCashDailyModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+        </div>
+        <div class="production-cash-daily-modal-body" id="productionCashDailyModalBody"></div>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="productionPhotoModal" hidden>
+      <section class="modal-panel wide-modal production-photo-modal" role="dialog" aria-modal="true" aria-labelledby="productionPhotoModalName">
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">Production Reference</p>
+            <h2 id="productionPhotoModalName">Reference Photo</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-modal="productionPhotoModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+        </div>
+        <img id="productionPhotoModalImage" class="production-photo-modal-image" alt="Production reference photo" />
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="stockPhotoModal" hidden>
+      <section class="modal-panel wide-modal production-photo-modal" role="dialog" aria-modal="true" aria-labelledby="stockPhotoModalName">
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">Stock Photo</p>
+            <h2 id="stockPhotoModalName">ပန်းစည်းဓာတ်ပုံ</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-modal="stockPhotoModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+        </div>
+        <img id="stockPhotoModalImage" class="production-photo-modal-image" alt="Stock bouquet photo" />
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="receivablePaymentModal" hidden>
+      <section class="modal-panel receivable-payment-modal" role="dialog" aria-modal="true" aria-labelledby="receivablePaymentTitle">
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">ကျန်ငွေထပ်သွင်းရန်</p>
+            <h2 id="receivablePaymentTitle">Voucher Payment</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-modal="receivablePaymentModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+        </div>
+        <div class="receivable-payment-details" id="receivablePaymentDetails"></div>
+        <form class="form-grid receivable-payment-form" id="receivablePaymentForm" autocomplete="off">
+          <label>
+            Payment Date
+            <input name="paymentDate" type="date" required />
+          </label>
+          <label>
+            Payment Type
+            <select name="paymentType" required>
+              <option>Cash</option>
+              <option>KBZPay</option>
+              <option>WavePay</option>
+              <option>AYA Pay</option>
+              <option>Bank Transfer</option>
+            </select>
+          </label>
+          <label>
+            Amount
+            <input name="amount" type="number" min="1" step="1" required />
+          </label>
+          <label>
+            ပစ္စည်းအခြေအနေ
+            <select name="fulfillmentStatus">
+              <option value="">မပြောင်းပါ</option>
+              <option value="delivered">ပေးပြီး</option>
+              <option value="pending">မပေးရသေး</option>
+            </select>
+          </label>
+          <p class="form-status wide" id="receivablePaymentStatus" role="status"></p>
+          <div class="form-actions wide">
+            <button class="button ghost" type="button" data-close-modal="receivablePaymentModal">Cancel</button>
+            <button class="button primary" type="submit"><i data-lucide="plus" aria-hidden="true"></i> Payment ထပ်သွင်းမယ်</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="soldCostModal" hidden>
+      <section class="modal-panel wide-modal" role="dialog" aria-modal="true" aria-labelledby="soldCostTitle">
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">Cash Bouquet Detail</p>
+            <h2 id="soldCostTitle">Voucher / Code ငွေသားစာရင်း</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-modal="soldCostModal" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+        </div>
+        <div id="soldCostBody"></div>
+      </section>
+    </div>
+
     <div class="modal-backdrop" id="actionNoticeModal" hidden>
       <section class="modal-panel action-notice-panel" role="dialog" aria-modal="true" aria-labelledby="actionNoticeTitle">
-        <div class="action-notice-icon" id="actionNoticeIcon" aria-hidden="true">✓</div>
+        <div class="action-notice-icon" id="actionNoticeIcon" aria-hidden="true"><i data-lucide="check" aria-hidden="true"></i></div>
         <div>
           <p class="eyebrow" id="actionNoticeEyebrow">Notice</p>
           <h2 id="actionNoticeTitle">ပြီးပါပြီ</h2>
@@ -1099,6 +2289,7 @@
       </section>
     </div>
 
-    <script src="app.js?v=20260630-01"></script>
+    <script src="assets/vendor/lucide.min.js?v=1.55.0"></script>
+    <script src="app.js?v=20261006-business-transfer"></script>
   </body>
 </html>

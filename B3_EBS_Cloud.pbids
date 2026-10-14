@@ -1,0 +1,13 @@
+{
+  "version": "0.1",
+  "connections": [
+    {
+      "details": {
+        "protocol": "http",
+        "address": {
+          "url": "https://b3-floral-ebs.laomainelove.workers.dev/api/state"
+        }
+      }
+    }
+  ]
+}

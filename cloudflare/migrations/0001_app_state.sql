@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS app_state (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  updated_at INTEGER NOT NULL DEFAULT 0,
+  data TEXT NOT NULL DEFAULT '{}'
+);

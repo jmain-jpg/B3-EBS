@@ -1,0 +1,23 @@
+{
+  "name": "b3-floral-ebs",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "cloud:build": "node cloudflare/build.mjs",
+    "cloud:backup": "node --use-system-ca cloudflare/download-backup.mjs",
+    "cloud:r2-backup": "node --use-system-ca cloudflare/download-r2-backup.mjs",
+    "cloud:rotate-staff-passwords": "node --use-system-ca cloudflare/rotate-staff-passwords.mjs",
+    "cloud:inventory": "node --use-system-ca cloudflare/inventory-data-editor.mjs",
+    "cloud:smoke": "node --use-system-ca cloudflare/smoke-test.mjs",
+    "cloud:seed": "node cloudflare/prepare-seed.mjs",
+    "cloud:seed:upload": "node cloudflare/upload-seed-parts.mjs",
+    "cloud:dev": "npm run cloud:build && wrangler dev",
+    "cloud:deploy": "node --test tests/*.test.mjs && node cloudflare/build.mjs && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.150.0"
+  },
+  "dependencies": {
+    "lucide": "^1.55.0"
+  }
+}
